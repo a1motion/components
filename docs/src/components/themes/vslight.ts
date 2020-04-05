@@ -2,68 +2,68 @@ import { PrismTheme } from "prism-react-renderer";
 
 const theme: PrismTheme = {
   plain: {
-    color: `#393A34`,
-    backgroundColor: `#f6f8fa`,
+    color: "#393A34",
+    backgroundColor: "#f6f8fa",
   },
   styles: [
     {
-      types: [`comment`],
+      types: ["comment"],
       style: {
-        color: `rgb(0, 128, 0)`,
+        color: "rgb(0, 128, 0)",
       },
     },
     {
-      types: [`builtin`, `function`, `keyword`],
+      types: ["builtin", "function", "keyword"],
       style: {
-        color: `rgb(0, 0, 255)`,
+        color: "rgb(0, 0, 255)",
       },
     },
     {
-      types: [`number`, `variable`, `inserted`],
+      types: ["number", "variable", "inserted"],
       style: {
-        color: `rgb(9, 134, 88)`,
+        color: "rgb(9, 134, 88)",
       },
     },
     {
-      types: [`operator`],
+      types: ["operator"],
       style: {
-        color: `rgb(0, 0, 0)`,
+        color: "rgb(0, 0, 0)",
       },
     },
     {
-      types: [`constant`, `char`],
+      types: ["constant", "char"],
       style: {
-        color: `rgb(129, 31, 63)`,
+        color: "rgb(129, 31, 63)",
       },
     },
     {
-      types: [`tag`],
+      types: ["tag"],
       style: {
-        color: `rgb(128, 0, 0)`,
+        color: "rgb(128, 0, 0)",
       },
     },
     {
-      types: [`attr-name`],
+      types: ["attr-name"],
       style: {
-        color: `rgb(255, 0, 0)`,
+        color: "rgb(255, 0, 0)",
       },
     },
     {
-      types: [`deleted`, `string`],
+      types: ["deleted", "string"],
       style: {
-        color: `rgb(163, 21, 21)`,
+        color: "rgb(163, 21, 21)",
       },
     },
     {
-      types: [`changed`, `punctuation`],
+      types: ["changed", "punctuation"],
       style: {
-        color: `rgb(4, 81, 165)`,
+        color: "rgb(4, 81, 165)",
       },
     },
     {
-      types: [`class-name`],
+      types: ["class-name"],
       style: {
-        color: `rgb(38, 127, 153)`,
+        color: "rgb(38, 127, 153)",
       },
     },
   ],

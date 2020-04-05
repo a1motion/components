@@ -37,9 +37,9 @@ const PlaygroundComponent: SFC<PlaygroundComponentProps> = ({
 }) => (
   <div className={PlaygroundWrapper}>
     <div className={cx(ComponentWrapper, className)}>
-      {typeof Component === `function` ? <Component /> : Component}
+      {typeof Component === "function" ? <Component /> : Component}
     </div>
-    <CodeBlock language={`jsx`} className={CodeWrapper}>
+    <CodeBlock language={"jsx"} className={CodeWrapper}>
       {code}
     </CodeBlock>
   </div>

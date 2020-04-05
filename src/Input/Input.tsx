@@ -24,7 +24,7 @@ const StundInput = css`
   padding: 0 16px;
   border-radius: ${baseBorderRadius};
   background-color: #ffffff !important;
-  border: 2px solid ${colors[`color-basic-500`]};
+  border: 2px solid ${colors["color-basic-500"]};
   font-size: 12px;
   font: inherit;
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
@@ -39,10 +39,10 @@ const StundInput = css`
     font-weight: 500;
   }
   &:focus {
-    border-color: ${colors[`color-primary-400`]};
+    border-color: ${colors["color-primary-400"]};
   }
   &:focus ~ span {
-    color: ${colors[`color-primary-600`]};
+    color: ${colors["color-primary-600"]};
   }
   .${StundInputLoading} & {
     padding-left: 32px;
@@ -50,7 +50,7 @@ const StundInput = css`
 `;
 
 const StundInputLabel = css`
-  color: ${colors[`color-primary-500`]};
+  color: ${colors["color-primary-500"]};
   font-size: 14px;
   font-weight: 800;
   position: absolute;
@@ -72,19 +72,19 @@ const StundInputLabel = css`
 
 const StundInputSuccess = css`
   & .${StundInput} {
-    border-color: ${colors[`color-success-600`]} !important;
+    border-color: ${colors["color-success-600"]} !important;
   }
   & .${StundInput}::placeholder, & .${StundInputLabel} {
-    color: ${colors[`color-success-600`]} !important;
+    color: ${colors["color-success-600"]} !important;
   }
 `;
 
 const StundInputError = css`
   & .${StundInput} {
-    border-color: ${colors[`color-danger-600`]} !important;
+    border-color: ${colors["color-danger-600"]} !important;
   }
   & .${StundInput}::placeholder, & .${StundInputLabel} {
-    color: ${colors[`color-danger-600`]} !important;
+    color: ${colors["color-danger-600"]} !important;
   }
 `;
 
@@ -100,7 +100,7 @@ export interface BaseInputProps {
   label?: string;
   loading?: boolean;
   onChange?: (value: string) => void;
-  status?: `success` | `error`;
+  status?: "success" | "error";
 }
 export type InputProps = BaseInputProps &
   // eslint-disable-next-line quotes, @typescript-eslint/ban-types
@@ -118,7 +118,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const [active, setActive] = useState<boolean>(!!(value || defaultValue));
-  const [_value, setValue] = useState(defaultValue || ``);
+  const [_value, setValue] = useState(defaultValue || "");
   const _onChange = useCallback(
     (e) => {
       if (loading) {
@@ -142,8 +142,8 @@ const Input: React.FC<InputProps> = ({
         inline && StundInputInline,
         active && StundInputIsActive,
         loading && StundInputLoading,
-        status === `success` && StundInputSuccess,
-        status === `error` && StundInputError
+        status === "success" && StundInputSuccess,
+        status === "error" && StundInputError
       )}>
       <input
         {...props}

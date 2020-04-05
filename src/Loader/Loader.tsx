@@ -45,12 +45,12 @@ export interface LoaderProps {
 
 const Loader: React.FC<LoaderProps> = ({
   size = 60,
-  color = colors[`color-primary`],
+  color = colors["color-primary"],
   animationDuration = 1000,
   className,
 }) => (
   <div
-    className={`${LoaderBase}${className ? ` ${className}` : ``}`}
+    className={`${LoaderBase}${className ? ` ${className}` : ""}`}
     style={{ width: size, height: size }}>
     <div
       className={Circle}

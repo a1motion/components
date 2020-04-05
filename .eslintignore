@@ -1,3 +1,5 @@
-*.d.ts
 lib/
-docs/
+node_modules/
+docs/node_modules/
+docs/lib/
+docs/public/

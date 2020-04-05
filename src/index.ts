@@ -1,3 +1,4 @@
+import type { AccessibleTextProps } from "./AccessibleText/AccessibleText";
 import type { AvatarProps } from "./Avatar/Avatar";
 import type { BoxProps } from "./Box/Box";
 import type { ButtonProps } from "./Button/Button";
@@ -7,8 +8,10 @@ import type { FormProps, FormItemProps } from "./Form/Form";
 import type { InputProps } from "./Input/Input";
 import type { LoaderProps } from "./Loader/Loader";
 import type { StepperProps, StepperItemProps } from "./Stepper/Stepper";
+import type { SwitchProps } from "./Switch/Switch";
 import type { TitleProps } from "./Title/Title";
 
+export { default as AccessibleText } from "./AccessibleText/AccessibleText";
 export { default as Avatar } from "./Avatar/Avatar";
 export { default as Box } from "./Box/Box";
 export { default as Button } from "./Button/Button";
@@ -20,9 +23,11 @@ export { default as Input } from "./Input/Input";
 export { default as Loader } from "./Loader/Loader";
 export { default as Menu } from "./Menu/Menu";
 export { default as Stepper, StepperItem } from "./Stepper/Stepper";
+export { default as Switch } from "./Switch/Switch";
 export { default as Title } from "./Title/Title";
 export * from "./utils/index";
 export type {
+  AccessibleTextProps,
   AvatarProps,
   BoxProps,
   ButtonProps,
@@ -34,5 +39,6 @@ export type {
   LoaderProps,
   StepperProps,
   StepperItemProps,
+  SwitchProps,
   TitleProps,
 };

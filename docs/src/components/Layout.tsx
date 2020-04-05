@@ -82,7 +82,7 @@ const TableCellStyles = css`
   }
 `;
 
-const TableCell = (Type: `th` | `td`) => (props) => {
+const TableCell = (Type: "th" | "td") => (props) => {
   return <Type {...props} className={TableCellStyles} />;
 };
 
@@ -108,8 +108,8 @@ const components = {
   code: (props: any) => <CodeBlock {...props} />,
   table: Table,
   tr: TableRow,
-  th: TableCell(`th`),
-  td: TableCell(`td`),
+  th: TableCell("th"),
+  td: TableCell("td"),
   inlineCode: InlineCode,
   pre: ({ children }: any) => {
     return children;
@@ -146,7 +146,7 @@ const ContentStyles = css`
 
 type SidebarProps = {
   activePage: string;
-}
+};
 
 const Sidebar: React.FC<SidebarProps> = ({ activePage }) => {
   const {
@@ -167,20 +167,18 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage }) => {
     }
   `);
   const components = nodes
-    .filter((meta) => meta?.frontmatter?.menu === `component`)
+    .filter((meta) => meta?.frontmatter?.menu === "component")
     .sort((a, b) => a.frontmatter.name.localeCompare(b.frontmatter.name));
   return (
     <div className={SidebarStyles}>
       <nav>
         <Menu activeKeys={[activePage]}>
-          <Menu.SubMenu title={`Components`}>
+          <Menu.SubMenu title={"Components"}>
             {components.map((component) => {
               return (
                 <Menu.Item key={component.id} id={component.frontmatter.path}>
                   <Link to={component.frontmatter.path}>
-                    <Button type={`link`}>
-                      {component.frontmatter.name}
-                    </Button>
+                    <Button type={"link"}>{component.frontmatter.name}</Button>
                   </Link>
                 </Menu.Item>
               );

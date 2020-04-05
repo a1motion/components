@@ -13,9 +13,9 @@ import Loader from "../Loader/Loader";
 import "../utils/global";
 
 export const StundButton = css`
-  color: ${colors[`color-basic-800`]};
+  color: ${colors["color-basic-800"]};
   outline: 0;
-  background: ${colors[`color-basic-200`]};
+  background: ${colors["color-basic-200"]};
   font-size: 16px;
   line-height: 1.25;
   padding: 8px 16px;
@@ -27,8 +27,8 @@ export const StundButton = css`
   letter-spacing: 0.5px;
   border: none;
   border-radius: ${baseBorderRadius};
-  transition: ${createTransitions(`background-color`, `box-shadow`, `opacity`)};
-  border: 1px solid ${colors[`color-basic-500`]};
+  transition: ${createTransitions("background-color", "box-shadow", "opacity")};
+  border: 1px solid ${colors["color-basic-500"]};
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   position: relative;
   &[disabled] {
@@ -37,11 +37,11 @@ export const StundButton = css`
   }
   &:not([disabled]):hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: ${lighten(0.025)(colors[`color-basic-200`])};
+    background: ${lighten(0.025)(colors["color-basic-200"])};
   }
   &:not([disabled]):active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    background: ${darken(0.025)(colors[`color-basic-200`])};
+    background: ${darken(0.025)(colors["color-basic-200"])};
   }
   a& {
     text-decoration: none;
@@ -53,13 +53,13 @@ const StundButtonLink = css`
   padding: 0 !important;
   background: none !important;
   box-shadow: none !important;
-  color: ${colors[`color-basic-700`]};
+  color: ${colors["color-basic-700"]};
   a&:hover {
     text-decoration: underline;
   }
   &:hover,
   &:active {
-    color: ${darken(0.05, colors[`color-primary`])};
+    color: ${darken(0.05, colors["color-primary"])};
   }
 `;
 
@@ -67,64 +67,64 @@ const StundButtonOutline = css`
   background: none;
   box-shadow: none !important;
   &:not([disabled]):hover {
-    background: ${darken(0.02)(colors[`color-basic-200`])};
+    background: ${darken(0.02)(colors["color-basic-200"])};
   }
   &:not([disabled]):active {
-    border-color: ${colors[`color-basic-600`]};
-    background: ${darken(0.05)(colors[`color-basic-200`])};
+    border-color: ${colors["color-basic-600"]};
+    background: ${darken(0.05)(colors["color-basic-200"])};
   }
 `;
 
 const StundButtonPrimary = css`
-  border-color: ${darken(0.1)(colors[`color-primary`])};
-  box-shadow: 0 2px 0 ${rgba(colors[`color-primary`], 0.1)};
+  border-color: ${darken(0.1)(colors["color-primary"])};
+  box-shadow: 0 2px 0 ${rgba(colors["color-primary"], 0.1)};
   &:not(.${StundButtonOutline}) {
-    color: ${colors[`color-basic-100`]};
-    background: ${colors[`color-primary`]};
+    color: ${colors["color-basic-100"]};
+    background: ${colors["color-primary"]};
   }
   &:not([disabled]):hover {
-    box-shadow: 0 2px 4px ${rgba(colors[`color-primary`], 0.25)};
-    background: ${darken(0.1)(colors[`color-primary`])};
+    box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.25)};
+    background: ${darken(0.1)(colors["color-primary"])};
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px ${rgba(colors[`color-primary`], 0.4)};
-    background: ${darken(0.2)(colors[`color-primary`])};
+    box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.4)};
+    background: ${darken(0.2)(colors["color-primary"])};
   }
   &.${StundButtonOutline} {
-    color: ${darken(0.2, colors[`color-primary`])};
+    color: ${darken(0.2, colors["color-primary"])};
     &:not([disabled]):hover {
-      background: ${lighten(0.4)(colors[`color-primary`])};
+      background: ${lighten(0.4)(colors["color-primary"])};
     }
     &:not([disabled]):active {
-      border-color: ${darken(0.1)(colors[`color-primary`])};
-      background: ${lighten(0.3)(colors[`color-primary`])};
+      border-color: ${darken(0.1)(colors["color-primary"])};
+      background: ${lighten(0.3)(colors["color-primary"])};
     }
   }
 `;
 
 const StundButtonDanager = css`
-  border-color: ${darken(0.1)(colors[`color-danger`])};
-  box-shadow: 0 2px 0 ${rgba(colors[`color-danger`], 0.1)};
+  border-color: ${darken(0.1)(colors["color-danger"])};
+  box-shadow: 0 2px 0 ${rgba(colors["color-danger"], 0.1)};
   &:not(.${StundButtonOutline}) {
-    color: ${colors[`color-basic-100`]};
-    background: ${colors[`color-danger`]};
+    color: ${colors["color-basic-100"]};
+    background: ${colors["color-danger"]};
   }
   &:not([disabled]):hover {
-    box-shadow: 0 2px 4px ${rgba(colors[`color-danger`], 0.25)};
-    background: ${darken(0.05)(colors[`color-danger`])};
+    box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.25)};
+    background: ${darken(0.05)(colors["color-danger"])};
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px ${rgba(colors[`color-danger`], 0.4)};
-    background: ${darken(0.1)(colors[`color-danger`])};
+    box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.4)};
+    background: ${darken(0.1)(colors["color-danger"])};
   }
   &.${StundButtonOutline} {
-    color: ${darken(0.1, colors[`color-danger`])};
+    color: ${darken(0.1, colors["color-danger"])};
     &:not([disabled]):hover {
-      background: ${lighten(0.4)(colors[`color-danger`])};
+      background: ${lighten(0.4)(colors["color-danger"])};
     }
     &:not([disabled]):active {
-      border-color: ${darken(0.1)(colors[`color-danger`])};
-      background: ${lighten(0.35)(colors[`color-danger`])};
+      border-color: ${darken(0.1)(colors["color-danger"])};
+      background: ${lighten(0.35)(colors["color-danger"])};
     }
   }
 `;
@@ -165,9 +165,9 @@ const StundButtonLoader = css`
 
 export interface BaseButtonProps {
   label?: string;
-  status?: `default` | `primary` | `danger`;
-  type?: `default` | `link` | `outline`;
-  size?: `small` | `normal` | `large`;
+  status?: "default" | "primary" | "danger";
+  type?: "default" | "link" | "outline";
+  size?: "small" | "normal" | "large";
   loading?: boolean;
   // eslint-disable-next-line quotes
   htmlType?: JSX.IntrinsicElements["button"]["type"];
@@ -224,7 +224,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       return () => clearInterval(_loadingDelay.current!);
     }, []);
     const renderChildren = useCallback(() => {
-      if (typeof children === `string` || label) {
+      if (typeof children === "string" || label) {
         return (
           <span
             className={cx(StundButtonLabel, _loading && StundButtonLoading)}>
@@ -238,12 +238,12 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     const classes = useMemo(() => {
       return cx(
         StundButton,
-        status === `primary` && StundButtonPrimary,
-        status === `danger` && StundButtonDanager,
-        type === `link` && StundButtonLink,
-        type === `outline` && StundButtonOutline,
-        size === `small` && StundButtonSmall,
-        size === `large` && StundButtonLarge,
+        status === "primary" && StundButtonPrimary,
+        status === "danger" && StundButtonDanager,
+        type === "link" && StundButtonLink,
+        type === "outline" && StundButtonOutline,
+        size === "small" && StundButtonSmall,
+        size === "large" && StundButtonLarge,
         className
       );
     }, [status, size, className]);
@@ -255,9 +255,9 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
             <Loader
               size={16}
               color={
-                [`primary`, `danger`].includes(status!)
-                  ? colors[`color-basic-200`]
-                  : colors[`color-primary-500`]
+                ["primary", "danger"].includes(status!)
+                  ? colors["color-basic-200"]
+                  : colors["color-primary-500"]
               }
             />
           </span>
@@ -283,9 +283,9 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       <button
         {...props}
         className={classes}
-        role={`button`}
+        role={"button"}
         disabled={disabled}
-        aria-disabled={disabled ? `true` : `false`}
+        aria-disabled={disabled ? "true" : "false"}
         aria-label={label}
         type={htmlType}
         onClick={handleClick}

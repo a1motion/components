@@ -22,7 +22,7 @@ const CardHeaderFooter = css`
 `;
 
 const CardHeader = css`
-  border-bottom: 1px solid ${colors[`color-basic-500`]};
+  border-bottom: 1px solid ${colors["color-basic-500"]};
   & .${TitleContainer} {
     margin: 0;
     flex: 1;
@@ -33,13 +33,13 @@ const CardHeader = css`
 `;
 
 const CardFooter = css`
-  border-top: 1px solid ${colors[`color-basic-500`]};
+  border-top: 1px solid ${colors["color-basic-500"]};
 `;
 
 const CardContainer = css`
   overflow: hidden;
   border-radius: 6px;
-  border: 1px solid ${colors[`color-basic-500`]};
+  border: 1px solid ${colors["color-basic-500"]};
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
 `;
 

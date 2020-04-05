@@ -47,13 +47,13 @@ const InternalMenu: React.FC<InternalMenuProps> = ({
         return child;
       }
 
-      if (typeof child === `string`) {
+      if (typeof child === "string") {
         return child;
       }
 
       const childProps = child.props;
       // https://github.com/ant-design/ant-design/issues/11517#issuecomment-477403055
-      if (!childProps || typeof child.type === `string`) {
+      if (!childProps || typeof child.type === "string") {
         return child;
       }
 
@@ -87,13 +87,13 @@ const MenuItemStyles = css`
   border-top-left-radius: 32px;
   border-bottom-left-radius: 32px;
   background-color: #fff;
-  transition: ${createTransitions(`background-color`)};
+  transition: ${createTransitions("background-color")};
 `;
 
 const MenuItemActive = css`
-  background-color: ${lighten(0.1, colors[`color-primary`])};
+  background-color: ${lighten(0.1, colors["color-primary"])};
   & a button {
-    color: ${colors[`color-basic-300`]};
+    color: ${colors["color-basic-300"]};
   }
 `;
 
@@ -119,11 +119,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, title, id }) => {
 
 const SubMenu: React.FC<MenuItemProps> = ({ title, indent = 0, ...props }) => {
   const renderTitle = useCallback(() => {
-    if (typeof title !== `string`) {
+    if (typeof title !== "string") {
       return title;
     }
 
-    return <Button label={title} type={`link`} size={`large`} />;
+    return <Button label={title} type={"link"} size={"large"} />;
   }, [title]);
   return (
     <li>

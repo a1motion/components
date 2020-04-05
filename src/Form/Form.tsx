@@ -39,8 +39,8 @@ const Form: React.FC<FormProps> & {
 
 export type FormItemProps = {
   hint?: string;
-  status?: `error`;
-  float?: `right`;
+  status?: "error";
+  float?: "right";
 };
 
 const FormItemContainer = css`
@@ -56,7 +56,7 @@ const FormItemHint = css`
 `;
 
 const FormItemHintError = css`
-  color: ${colors[`color-danger-600`]};
+  color: ${colors["color-danger-600"]};
 `;
 
 const FormItemChildrenContainerFloatRight = css`
@@ -74,13 +74,13 @@ const FormItem: React.FC<FormItemProps> = ({
     <div className={FormItemContainer}>
       <div
         className={cx(
-          float === `right` && FormItemChildrenContainerFloatRight
+          float === "right" && FormItemChildrenContainerFloatRight
         )}>
         {children}
       </div>
       {hint && (
         <div
-          className={cx(FormItemHint, status === `error` && FormItemHintError)}>
+          className={cx(FormItemHint, status === "error" && FormItemHintError)}>
           {hint}
         </div>
       )}

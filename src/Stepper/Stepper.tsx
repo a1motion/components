@@ -103,8 +103,8 @@ const StepperItem: React.FC<StepperItemProps> = ({
     <li
       className={cx(
         StepperItemContainer,
-        active && `active`,
-        completed && `completed`,
+        active && "active",
+        completed && "completed",
         className
       )}>
       <div className={StepperItemTail} />

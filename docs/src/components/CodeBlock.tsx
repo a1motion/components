@@ -1,6 +1,6 @@
 import React from "react";
 import Highlight, { defaultProps, PrismTheme } from "prism-react-renderer";
-import vsdark from "./themes/vsdark";
+// import vsdark from "./themes/vsdark";
 import vslight from "./themes/vslight";
 import { cx } from "linaria";
 
@@ -9,7 +9,7 @@ const CodeBlock: React.FC<{ className?: string; language?: string }> = ({
   className: _className,
   language: _language,
 }) => {
-  const language = _language || (_className.replace(/language-/, ``) as any);
+  const language = _language || (_className.replace(/language-/, "") as any);
   return (
     <Highlight
       {...defaultProps}
@@ -19,7 +19,7 @@ const CodeBlock: React.FC<{ className?: string; language?: string }> = ({
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           className={cx(className, _className)}
-          style={{ ...style, padding: `20px` }}>
+          style={{ ...style, padding: "20px" }}>
           {tokens.map((line, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <div key={i} {...getLineProps({ line, key: i })}>

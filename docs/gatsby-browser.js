@@ -1,5 +1,5 @@
-const React = require(`react`);
-const Layout = require(`./src/components/Layout.tsx`).default;
+const React = require("react");
+const Layout = require("./src/components/Layout.tsx").default;
 
 // eslint-disable-next-line react/display-name
 exports.wrapPageElement = ({ element, props }) => {

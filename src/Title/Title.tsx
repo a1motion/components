@@ -5,7 +5,7 @@ import "../utils/global";
 
 export interface BaseTitleProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  align?: `left` | `center` | `right`;
+  align?: "left" | "center" | "right";
   invert?: boolean;
 }
 export const BaseTitle: React.FC<BaseTitleProps> = () => null;
@@ -62,7 +62,7 @@ const Title: React.FC<TitleProps> = ({
       className={cx(
         TitleContainer,
         align && `align-${align}`,
-        invert && `invert`,
+        invert && "invert",
         className
       )}
       {...props}>

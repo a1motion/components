@@ -1,20 +1,20 @@
 module.exports = {
   plugins: [
-    `gatsby-plugin-typescript`,
-    `gatsby-plugin-linaria`,
+    "gatsby-plugin-typescript",
+    "gatsby-plugin-linaria",
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `pages`,
+        name: "pages",
         path: `${__dirname}/src/pages/`,
       },
     },
     {
-      resolve: `gatsby-plugin-mdx`,
+      resolve: "gatsby-plugin-mdx",
       options: {
-        rehypePlugins: [require(`rehype-docz`)],
+        rehypePlugins: [require("rehype-docz")],
       },
     },
-    `gatsby-transformer-remark`,
+    "gatsby-transformer-remark",
   ],
 };
