@@ -1,0 +1,21 @@
+---
+name: Form
+menu: component
+path: /form
+---
+
+## Form
+
+import { Form, Input } from "@a1motion/components";
+
+### Basic usage
+<Playground>
+  <Form>
+    <Form.Item>
+      <Input label={`Username`} />
+    </Form.Item>
+    <Form.Item>
+      <Input label={`Password`} type={`password`} />
+    </Form.Item>
+  </Form>
+</Playground>

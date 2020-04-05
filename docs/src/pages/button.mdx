@@ -1,0 +1,101 @@
+---
+name: Button
+menu: component
+path: /button
+---
+
+import { useState } from "react";
+import { Button } from "@a1motion/components";
+
+## Button
+
+### Properties
+
+| Property | Description                    | Type                               | Default  |
+| -------- | ------------------------------ | ---------------------------------- | -------- |
+| label    | Button Text                    | `string`                           |          |
+| status   | The color of the button        | `default` \| `primary` \| `danger` |          |
+| type     | What type of button to display | `default` \| `link` \| `outline`   |          |
+| size     |                                | `small` \| `normal` \| `large`     | `normal` |
+| loading  | show loading status            | `boolean`                          | `false`  |
+
+### Basic usage
+
+<Playground>
+  <Button label={`Click Me!`} />
+</Playground>
+
+### Status
+
+<Playground className={"margin-between-buttons"}>
+  <Button label={`Default`} />
+  <Button label={`Primary`} status={"primary"} />
+  <Button label={`Danger`} status={"danger"} />
+</Playground>
+
+### Links
+
+<Playground className={"margin-between-buttons"}>
+  <Button label={`Link`} type={"link"} />
+</Playground>
+
+### Outline
+
+<Playground className={"margin-between-buttons"}>
+  <Button label={`Default`} type={"outline"} />
+  <Button label={`Primary`} type={"outline"} status={`primary`} />
+  <Button label={`Danger`} type={"outline"} status={`danger`} />
+</Playground>
+
+
+## Sizes
+
+<Playground className={"margin-between-buttons"}>
+  <Button label={`Small`} size={"small"} />
+  <Button label={`Normal`} size={"normal"} />
+  <Button label={`Large`} size={"large"} />
+</Playground>
+
+## Loading
+
+<Playground className={"margin-between-buttons"}>
+  {() => {
+    const [loading, setLoading] = useState(false);
+    return (
+      <div>
+        <Button
+          label={`Toggle Loading`}
+          loading={loading}
+          onClick={() => setLoading(!loading)}
+        />
+        <Button
+          label={`Toggle Loading`}
+          status={"primary"}
+          loading={loading}
+          onClick={() => setLoading(!loading)}
+        />
+        <Button
+          label={`Toggle Loading`}
+          status={"danger"}
+          loading={loading}
+          onClick={() => setLoading(!loading)}
+        />
+      </div>
+    );
+  }}
+</Playground>
+
+## Disabled
+
+<Playground className={"margin-between-buttons"}>
+  <div style={{marginBottom: '1em'}}>
+    <Button label={`Disabled`} disabled />
+    <Button label={`Disabled`} status={"primary"} disabled />
+    <Button label={`Disabled`} status={"danger"} disabled />
+  </div>
+  <div>
+    <Button label={`Disabled`} type={'outline'} disabled />
+    <Button label={`Disabled`} type={'outline'} status={"primary"} disabled />
+    <Button label={`Disabled`} type={'outline'} status={"danger"} disabled />
+  </div>
+</Playground>

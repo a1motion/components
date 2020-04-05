@@ -1,0 +1,61 @@
+---
+name: Input
+menu: component
+path: /input
+---
+
+import { useState } from "react";
+import { Input } from "@a1motion/components";
+
+# Input
+
+### Properties
+
+| Property | Description                                   | Type                                   | Default |
+| -------- | --------------------------------------------- | -------------------------------------- | ------- |
+| value    |                                               | `string`                               |         |
+| inline   | renders the input inline                      | `boolean`                              | `false` |
+| label    | Text displayed in the floating label          | `string`                               |         |
+| loading  | renders a spinner inside the input            | `boolean`                              | `false` |
+| onChange | called when the input updates                 | `(value: string) => void`              |         |
+| status   | colored hint                                  | `success` \| `error`                   |         |
+
+
+### Basic usage
+
+<Playground>
+  <Input label={`Name`} />
+</Playground>
+
+
+### Inline
+
+<Playground>
+  <Input label={`Name`} inline />
+</Playground>
+
+### Loading
+
+<Playground>
+  {() => {
+    const [loading, setLoading] = useState(false);
+    return (
+      <div>
+        <div>
+          <label>
+            <input type="checkbox" onChange={(e) => setLoading(e.target.checked)} />
+            <span>Toggle</span>
+          </label>
+        </div>
+        <Input label={`Name`} loading={loading} />
+      </div>
+    )
+  }}
+</Playground>
+
+### Status
+
+<Playground className={`margin-between-labels`}>
+  <Input label={`Success`} status={`success`} />
+  <Input label={`Error`} status={`error`} />
+</Playground>

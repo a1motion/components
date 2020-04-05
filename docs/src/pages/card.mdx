@@ -1,0 +1,49 @@
+---
+name: Card
+menu: component
+path: /card
+---
+
+import { Button, Card } from "@a1motion/components";
+
+## Card
+
+### Properties
+
+| Property | Description                                   | Type                                   | Default |
+| -------- | --------------------------------------------- | -------------------------------------- | ------- |
+| header   | Header Node **(overrides title and extra)**   | `React.ReactNode`                      |         |
+| title    | Header Title                                  | `string`                               |         |
+| extra    | Extra node to render at the end of the header | `React.ReactNode`                      |         |
+| footer   | Footer Node                                   | `React.ReactNode`                      |         |
+
+### Basic usage
+
+<Playground>
+  <Card title={`Card Title`}>
+    <div>Content</div>
+    <div>Content</div>
+    <div>Content</div>
+  </Card>
+</Playground>
+
+### Extra Content in Header
+
+<Playground>
+  <Card title={`Card Title`} extra={<Button label={`Extra`} size={`small`} />}>
+    <div>Content</div>
+    <div>Content</div>
+    <div>Content</div>
+  </Card>
+</Playground>
+
+
+### Extra Content in Footer
+
+<Playground>
+  <Card title={`Card Title`} footer={<div><Button size={`small`}>Hello</Button></div>}>
+    <div>Content</div>
+    <div>Content</div>
+    <div>Content</div>
+  </Card>
+</Playground>
