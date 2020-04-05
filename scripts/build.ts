@@ -69,14 +69,9 @@ export function buildFile(file: string) {
       path.dirname(normalizedInputFilename),
       outputFilename
     );
-    const requireStatement =
-      process.env.NODE_ENV === `production`
-        ? `\nimport "${
-            relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
-          }"`
-        : `\nrequire('${
-            relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
-          }');`;
+    const requireStatement = `\nimport "${
+      relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
+    }"`;
 
     const inputContent = fs.readFileSync(normalizedInputFilename, `utf-8`);
     if (!inputContent.trim().startsWith(`${requireStatement}`)) {
@@ -119,14 +114,9 @@ export async function buildFileAsync(file: string) {
       path.dirname(normalizedInputFilename),
       outputFilename
     );
-    const requireStatement =
-      process.env.NODE_ENV === `production`
-        ? `import "${
-            relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
-          }"`
-        : `require('${
-            relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
-          }');`;
+    const requireStatement = `import "${
+      relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
+    }"`;
 
     const inputContent = await fs.promises.readFile(
       normalizedInputFilename,
