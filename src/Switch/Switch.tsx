@@ -50,9 +50,15 @@ export type SwitchProps = {
   title: string;
   value?: boolean;
   defaultValue?: boolean;
+  onChange?: (e: boolean) => void;
 };
 
-const Switch: React.FC<SwitchProps> = ({ title, value, defaultValue }) => {
+const Switch: React.FC<SwitchProps> = ({
+  title,
+  value,
+  defaultValue,
+  onChange,
+}) => {
   const [_value, _setValue] = useState(defaultValue ?? false);
   return (
     <div className={cx(SwitchWrapper)}>
@@ -64,6 +70,7 @@ const Switch: React.FC<SwitchProps> = ({ title, value, defaultValue }) => {
           checked={value ?? _value}
           onChange={(e) => {
             _setValue(e.target.checked);
+            onChange?.(e.target.checked);
           }}
         />
         <AccessibleText text={title} />

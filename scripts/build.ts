@@ -16,7 +16,7 @@ function resolveOutputFilename(filename: string, outDir: string) {
   const folderStructure = path.relative(process.cwd(), path.dirname(filename));
   const outputBasename = path
     .basename(filename)
-    .replace(path.extname(filename), `.css`);
+    .replace(path.extname(filename), ".css");
 
   return path.join(outDir, folderStructure, outputBasename);
 }
@@ -26,7 +26,7 @@ function resolveOutputFilename(filename: string, outDir: string) {
  * @param filename the input filename
  */
 function resolveRequireInsertionFilename(filename: string) {
-  return filename.replace(/\.tsx?/, `.js`);
+  return filename.replace(/\.tsx?/, ".js");
 }
 
 function rewiteCSSSourceMaps(map: string, input: string) {
@@ -41,9 +41,9 @@ function rewiteCSSSourceMaps(map: string, input: string) {
 export function buildFile(file: string) {
   const outputFilename = resolveOutputFilename(
     file,
-    path.join(__dirname, `..`, `lib`)
+    path.join(__dirname, "..", "lib")
   );
-  const filename = path.join(__dirname, `..`, `src`, file);
+  const filename = path.join(__dirname, "..", "src", file);
   const { cssText, cssSourceMapText } = transform(
     fs.readFileSync(filename).toString(),
     {
@@ -63,17 +63,17 @@ export function buildFile(file: string) {
     );
 
     const normalizedInputFilename = resolveRequireInsertionFilename(
-      filename.replace(`src`, `lib`)
+      filename.replace("src", "lib")
     );
     const relativePath = path.relative(
       path.dirname(normalizedInputFilename),
       outputFilename
     );
     const requireStatement = `\nimport "${
-      relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
+      relativePath.startsWith(".") ? relativePath : `./${relativePath}`
     }"`;
 
-    const inputContent = fs.readFileSync(normalizedInputFilename, `utf-8`);
+    const inputContent = fs.readFileSync(normalizedInputFilename, "utf-8");
     if (!inputContent.trim().startsWith(`${requireStatement}`)) {
       fs.writeFileSync(
         normalizedInputFilename,
@@ -86,11 +86,11 @@ export function buildFile(file: string) {
 export async function buildFileAsync(file: string) {
   const outputFilename = resolveOutputFilename(
     file,
-    path.join(__dirname, `..`, `lib`)
+    path.join(__dirname, "..", "lib")
   );
-  const filename = path.join(__dirname, `..`, `src`, file);
+  const filename = path.join(__dirname, "..", "src", file);
   const { cssText, cssSourceMapText } = transform(
-    await fs.promises.readFile(filename, `utf-8`),
+    await fs.promises.readFile(filename, "utf-8"),
     {
       filename,
       outputFilename,
@@ -108,19 +108,19 @@ export async function buildFileAsync(file: string) {
     );
 
     const normalizedInputFilename = resolveRequireInsertionFilename(
-      filename.replace(`src`, `lib`)
+      filename.replace("src", "lib")
     );
     const relativePath = path.relative(
       path.dirname(normalizedInputFilename),
       outputFilename
     );
     const requireStatement = `import "${
-      relativePath.startsWith(`.`) ? relativePath : `./${relativePath}`
+      relativePath.startsWith(".") ? relativePath : `./${relativePath}`
     }"`;
 
     const inputContent = await fs.promises.readFile(
       normalizedInputFilename,
-      `utf-8`
+      "utf-8"
     );
     if (!inputContent.trim().startsWith(`${requireStatement}`)) {
       await fs.promises.writeFile(
@@ -130,7 +130,7 @@ export async function buildFileAsync(file: string) {
       let sourceMap;
       try {
         sourceMap = JSON.parse(
-          await fs.promises.readFile(`${normalizedInputFilename}.map`, `utf-8`)
+          await fs.promises.readFile(`${normalizedInputFilename}.map`, "utf-8")
         );
       } catch (_e) {}
 
@@ -145,13 +145,13 @@ export async function buildFileAsync(file: string) {
   }
 }
 
-const root = path.join(__dirname, `..`);
-const src = path.join(root, `src`);
-const lib = path.join(root, `lib`);
+const root = path.join(__dirname, "..");
+const src = path.join(root, "src");
+const lib = path.join(root, "lib");
 
 export async function buildOutFile(file: string) {
   const { code, map } = await transformFileAsync(file, {
-    configFile: path.join(__dirname, `..`, `.babelrc.js`),
+    configFile: path.join(__dirname, "..", ".babelrc.js"),
     sourceMaps: true,
     filename: path.join(root, file),
   });
@@ -159,7 +159,7 @@ export async function buildOutFile(file: string) {
   outputFile = path.join(
     lib,
     path.dirname(outputFile),
-    path.basename(file, path.extname(file)) + `.js`
+    path.basename(file, path.extname(file)) + ".js"
   );
   await fs.promises.mkdir(path.dirname(outputFile), { recursive: true });
   const sourceMapLocation = `${outputFile}.map`;
@@ -174,16 +174,16 @@ export async function buildOutFile(file: string) {
 function build() {
   clean();
   fs.mkdirSync(lib);
-  execa.commandSync(`tsc`, {
-    cwd: path.join(__dirname, `..`),
-    stdio: `inherit`,
+  execa.commandSync("tsc", {
+    cwd: path.join(__dirname, ".."),
+    stdio: "inherit",
   });
   const files = globby.sync([
-    `${process.env.NODE_ENV === `production` ? `lib` : `src`}/**/*.${
-      process.env.NODE_ENV === `production` ? `{js,jsx}` : `{ts,tsx}`
+    `${process.env.NODE_ENV === "production" ? "lib" : "src"}/**/*.${
+      process.env.NODE_ENV === "production" ? "{js,jsx}" : "{ts,tsx}"
     }`,
-    `!src/**/*.test.tsx`,
-    `!src/docs`,
+    "!src/**/*.test.tsx",
+    "!src/docs",
   ]);
 
   files.forEach((file) => {
