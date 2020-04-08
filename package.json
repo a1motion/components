@@ -20,12 +20,9 @@
     "lib/utils/global.js"
   ],
   "dependencies": {
-    "concat-stream": "^2.0.0",
     "linaria": "^1.4.0-beta.1",
     "polished": "^3.4.4",
-    "react-is": "^16.13.1",
-    "typeface-rubik": "^0.0.72",
-    "vlq": "^1.0.1"
+    "react-is": "^16.13.1"
   },
   "peerDependencies": {
     "react": "*"
@@ -59,8 +56,8 @@
     "globby": "^11.0.0",
     "jest": "^25.1.0",
     "prettier": "^2.0.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "*",
+    "react-dom": "*",
     "ts-node": "^8.6.2",
     "typeface-lato": "^0.0.75",
     "typescript": "^3.7.5"

@@ -37,10 +37,18 @@ const Circle = css`
 `;
 
 export interface LoaderProps {
-  size?: number;
+  size?: number | string;
   color?: string;
   animationDuration?: number;
   className?: string;
+}
+
+function getSizeStyle(size: number | string): number | string {
+  if (typeof size === "number") {
+    return size / 10;
+  }
+
+  return `calc(${size} / 10)`;
 }
 
 const Loader: React.FC<LoaderProps> = ({
@@ -55,7 +63,7 @@ const Loader: React.FC<LoaderProps> = ({
     <div
       className={Circle}
       style={{
-        borderWidth: size / 10,
+        borderWidth: getSizeStyle(size),
         animationDuration: `${animationDuration}ms`,
         borderTopColor: color,
       }}
@@ -63,7 +71,7 @@ const Loader: React.FC<LoaderProps> = ({
     <div
       className={Circle}
       style={{
-        borderWidth: size / 10,
+        borderWidth: getSizeStyle(size),
         animationDuration: `${animationDuration}ms`,
         borderTopColor: color,
       }}

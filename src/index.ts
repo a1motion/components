@@ -7,6 +7,7 @@ import type { CardProps } from "./Card/Card";
 import type { FormProps, FormItemProps } from "./Form/Form";
 import type { InputProps } from "./Input/Input";
 import type { LoaderProps } from "./Loader/Loader";
+import type { MenuProps, MenuItemProps } from "./Menu/Menu";
 import type { StepperProps, StepperItemProps } from "./Stepper/Stepper";
 import type { SwitchProps } from "./Switch/Switch";
 import type { TitleProps } from "./Title/Title";
@@ -37,6 +38,8 @@ export type {
   FormItemProps,
   InputProps,
   LoaderProps,
+  MenuProps,
+  MenuItemProps,
   StepperProps,
   StepperItemProps,
   SwitchProps,
