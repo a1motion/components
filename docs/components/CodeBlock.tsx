@@ -1,24 +1,29 @@
 import React from "react";
+import { css, cx } from "linaria";
 import Highlight, { defaultProps, PrismTheme } from "prism-react-renderer";
-// import vsdark from "./themes/vsdark";
+import vsdark from "./themes/vsdark";
 import vslight from "./themes/vslight";
-import { cx } from "linaria";
+
+const CodeBlockStyles = css`
+  border-radius: 4px;
+`;
 
 const CodeBlock: React.FC<{ className?: string; language?: string }> = ({
   children,
   className: _className,
   language: _language,
 }) => {
-  const language = _language || (_className.replace(/language-/, "") as any);
+  const language =
+    _language || ((_className ?? "").replace(/language-/, "") as any);
   return (
     <Highlight
       {...defaultProps}
       code={(children as any).trim()}
-      theme={vslight as PrismTheme}
+      theme={vsdark as PrismTheme}
       language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
-          className={cx(className, _className)}
+          className={cx(className, _className, CodeBlockStyles)}
           style={{ ...style, padding: "20px" }}>
           {tokens.map((line, i) => (
             // eslint-disable-next-line react/no-array-index-key

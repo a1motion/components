@@ -5,12 +5,11 @@
   "license": "MIT",
   "scripts": {
     "watch": "yarn ts scripts/watch.ts",
-    "dev": "yarn docs develop",
     "build": "yarn ts scripts/build.ts",
-    "test": "jest",
-    "docs": "yarn --cwd docs",
     "ts": "ts-node -O '{\"module\":\"commonjs\"}' -T",
-    "lint": "eslint --format=pretty '**/*.{js,ts,jsx,tsx}'"
+    "lint": "eslint --format=pretty '**/*.{js,ts,jsx,tsx}'",
+    "docs-start": "next dev docs",
+    "docs-build": "next build docs && next export docs"
   },
   "files": [
     "lib/*"
@@ -28,22 +27,20 @@
     "react": "*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
-    "@babel/plugin-proposal-export-default-from": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^10.0.1",
-    "@types/jest": "^25.1.1",
+    "@mdx-js/loader": "^1.5.8",
+    "@mdx-js/react": "^1.5.8",
+    "@next/mdx": "^9.3.4",
+    "@types/babel__core": "^7.1.7",
     "@types/node": "^13.9.2",
     "@types/react": "^16.9.19",
     "@types/react-is": "^16.7.1",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
+    "@zeit/next-css": "^1.0.1",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^25.1.0",
     "chokidar": "^3.3.1",
     "eslint": "^6.8.0",
     "eslint-config-a1motion": "^3.2.1",
@@ -54,12 +51,17 @@
     "eslint-plugin-react": "^7.19.0",
     "execa": "^4.0.0",
     "globby": "^11.0.0",
-    "jest": "^25.1.0",
+    "next": "^9.3.4",
+    "next-fonts": "^1.0.3",
+    "next-transpile-modules": "^3.2.0",
     "prettier": "^2.0.2",
+    "prism-react-renderer": "^1.0.2",
     "react": "*",
     "react-dom": "*",
+    "rehype-docz": "^2.3.0",
     "ts-node": "^8.6.2",
-    "typeface-lato": "^0.0.75",
+    "typeface-fira-code": "^1.1.4",
+    "typeface-inter": "^3.12.0",
     "typescript": "^3.7.5"
   },
   "jest": {

@@ -3,6 +3,7 @@ import { css, cx } from "linaria";
 import { colors, createTransitions } from "../utils";
 import AccessibleText from "../AccessibleText/AccessibleText";
 import Loader from "../Loader/Loader";
+import "../global.css";
 
 const SwitchWrapper = css`
   display: flex;

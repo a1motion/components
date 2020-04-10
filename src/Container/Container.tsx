@@ -1,5 +1,6 @@
 import React from "react";
 import { css, cx } from "linaria";
+import "../global.css";
 
 const ContainerStyles = css`
   margin: 0 auto;

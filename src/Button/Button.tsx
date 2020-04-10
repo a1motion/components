@@ -10,7 +10,7 @@ import { css, cx } from "linaria";
 import { darken, rgba, lighten } from "polished";
 import { colors, baseBorderRadius, createTransitions } from "../utils";
 import Loader from "../Loader/Loader";
-import "../utils/global";
+import "../global.css";
 
 export const StundButton = css`
   color: ${colors["color-basic-800"]};
@@ -36,11 +36,11 @@ export const StundButton = css`
     opacity: 0.5;
   }
   &:not([disabled]):hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.1);
     background: ${lighten(0.025)(colors["color-basic-200"])};
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background: ${darken(0.025)(colors["color-basic-200"])};
   }
   a& {
@@ -84,11 +84,12 @@ const StundButtonPrimary = css`
   }
   &:not([disabled]):hover {
     box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.25)};
-    background: ${darken(0.1)(colors["color-primary"])};
+    background: ${lighten(0.1)(colors["color-primary"])};
+    border-color: ${colors["color-primary"]};
   }
   &:not([disabled]):active {
     box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.4)};
-    background: ${darken(0.2)(colors["color-primary"])};
+    background: ${darken(0.1)(colors["color-primary"])};
   }
   &.${StundButtonOutline} {
     color: ${darken(0.2, colors["color-primary"])};
@@ -110,8 +111,9 @@ const StundButtonDanager = css`
     background: ${colors["color-danger"]};
   }
   &:not([disabled]):hover {
+    border-color: ${colors["color-danger"]};
     box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.25)};
-    background: ${darken(0.05)(colors["color-danger"])};
+    background: ${lighten(0.1)(colors["color-danger"])};
   }
   &:not([disabled]):active {
     box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.4)};
@@ -127,6 +129,10 @@ const StundButtonDanager = css`
       background: ${lighten(0.35)(colors["color-danger"])};
     }
   }
+`;
+
+const StundButtonControl = css`
+  color: ${colors["color-basic-100"]};
 `;
 
 const StundButtonSmall = css`
@@ -165,7 +171,7 @@ const StundButtonLoader = css`
 
 export interface BaseButtonProps {
   label?: string;
-  status?: "default" | "primary" | "danger";
+  status?: "default" | "primary" | "danger" | "control";
   type?: "default" | "link" | "outline";
   size?: "small" | "normal" | "large";
   loading?: boolean;
@@ -240,6 +246,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         StundButton,
         status === "primary" && StundButtonPrimary,
         status === "danger" && StundButtonDanager,
+        status === "control" && StundButtonControl,
         type === "link" && StundButtonLink,
         type === "outline" && StundButtonOutline,
         size === "small" && StundButtonSmall,

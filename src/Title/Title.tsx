@@ -1,7 +1,7 @@
 import React from "react";
 import { css, cx } from "linaria";
 import { fontSizes } from "../utils";
-import "../utils/global";
+import "../global.css";
 
 export interface BaseTitleProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6;

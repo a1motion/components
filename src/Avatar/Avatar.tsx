@@ -1,6 +1,7 @@
 import React from "react";
 import { css, cx } from "linaria";
 import { styled } from "linaria/react";
+import "../global.css";
 
 const avatar = css`
   margin: 0;

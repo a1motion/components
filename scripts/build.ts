@@ -38,51 +38,6 @@ function rewiteCSSSourceMaps(map: string, input: string) {
   return JSON.stringify(sourceMap);
 }
 
-export function buildFile(file: string) {
-  const outputFilename = resolveOutputFilename(
-    file,
-    path.join(__dirname, "..", "lib")
-  );
-  const filename = path.join(__dirname, "..", "src", file);
-  const { cssText, cssSourceMapText } = transform(
-    fs.readFileSync(filename).toString(),
-    {
-      filename,
-      outputFilename,
-    }
-  );
-  if (cssText) {
-    fs.mkdirSync(path.dirname(outputFilename), { recursive: true });
-    fs.writeFileSync(
-      outputFilename,
-      `${cssText}\n/*# sourceMappingURL=${path.basename(outputFilename)}.map */`
-    );
-    fs.writeFileSync(
-      `${outputFilename}.map`,
-      rewiteCSSSourceMaps(cssSourceMapText!, outputFilename)
-    );
-
-    const normalizedInputFilename = resolveRequireInsertionFilename(
-      filename.replace("src", "lib")
-    );
-    const relativePath = path.relative(
-      path.dirname(normalizedInputFilename),
-      outputFilename
-    );
-    const requireStatement = `\nimport "${
-      relativePath.startsWith(".") ? relativePath : `./${relativePath}`
-    }"`;
-
-    const inputContent = fs.readFileSync(normalizedInputFilename, "utf-8");
-    if (!inputContent.trim().startsWith(`${requireStatement}`)) {
-      fs.writeFileSync(
-        normalizedInputFilename,
-        `${requireStatement}\n${inputContent}`
-      );
-    }
-  }
-}
-
 export async function buildFileAsync(file: string) {
   const outputFilename = resolveOutputFilename(
     file,
@@ -178,10 +133,9 @@ function build() {
     cwd: path.join(__dirname, ".."),
     stdio: "inherit",
   });
+  fs.copyFileSync(path.join(src, "global.css"), path.join(lib, "global.css"));
   const files = globby.sync([
-    `${process.env.NODE_ENV === "production" ? "lib" : "src"}/**/*.${
-      process.env.NODE_ENV === "production" ? "{js,jsx}" : "{ts,tsx}"
-    }`,
+    "src/**/*.{ts,tsx}",
     "!src/**/*.test.tsx",
     "!src/docs",
   ]);

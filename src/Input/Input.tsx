@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { css, cx } from "linaria";
 import { baseBorderRadius, colors } from "../utils";
 import Loader from "../Loader/Loader";
-import "../utils/global";
+import "../global.css";
 
 const StundInputContainer = css`
   position: relative;

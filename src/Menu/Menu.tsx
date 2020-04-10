@@ -5,6 +5,7 @@ import { lighten } from "polished";
 import { isElement } from "react-is";
 import { colors, createTransitions } from "../utils";
 import Button from "../Button/Button";
+import "../global.css";
 
 type MenuContextType = {
   activeKeys: string[];
@@ -72,7 +73,7 @@ const InternalMenu: React.FC<InternalMenuProps> = ({
 };
 
 export type MenuItemProps = {
-  title?: string;
+  title?: string | React.ReactNode;
   id?: string;
   indent?: number;
 };
@@ -92,7 +93,10 @@ const MenuItemStyles = css`
 
 const MenuItemActive = css`
   background-color: ${lighten(0.1, colors["color-primary"])};
-  & a button {
+  & button,
+  & a,
+  & a:hover,
+  & button:hover {
     color: ${colors["color-basic-300"]};
   }
 `;
@@ -117,7 +121,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, title, id }) => {
   );
 };
 
-const SubMenu: React.FC<MenuItemProps> = ({ title, indent = 0, ...props }) => {
+const SubMenu: React.FC<MenuItemProps> = ({
+  title,
+  indent = 0,
+  id,
+  ...props
+}) => {
+  const { activeKeys } = useContext(MenuContext);
   const renderTitle = useCallback(() => {
     if (typeof title !== "string") {
       return title;
@@ -127,7 +137,12 @@ const SubMenu: React.FC<MenuItemProps> = ({ title, indent = 0, ...props }) => {
   }, [title]);
   return (
     <li>
-      <div style={{ paddingLeft: (indent * 24) / 2, marginBottom: 8 }}>
+      <div
+        style={{ paddingLeft: (indent * 24) / 2 }}
+        className={cx(
+          MenuItemStyles,
+          id && activeKeys.includes(id) && MenuItemActive
+        )}>
         {renderTitle()}
       </div>
       <InternalMenu {...props} indent={indent} />

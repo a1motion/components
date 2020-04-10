@@ -1,6 +1,0 @@
-.cache/
-.linaria-cache/
-lib/
-node_modules/
-public/
-!yarn.lock

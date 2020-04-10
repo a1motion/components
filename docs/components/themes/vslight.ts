@@ -2,8 +2,8 @@ import { PrismTheme } from "prism-react-renderer";
 
 const theme: PrismTheme = {
   plain: {
-    color: "#393A34",
-    backgroundColor: "#f6f8fa",
+    color: "#000000",
+    backgroundColor: "#ffffff",
   },
   styles: [
     {
@@ -31,7 +31,7 @@ const theme: PrismTheme = {
       },
     },
     {
-      types: ["constant", "char"],
+      types: ["constant"],
       style: {
         color: "rgb(129, 31, 63)",
       },
@@ -58,12 +58,6 @@ const theme: PrismTheme = {
       types: ["changed", "punctuation"],
       style: {
         color: "rgb(4, 81, 165)",
-      },
-    },
-    {
-      types: ["class-name"],
-      style: {
-        color: "rgb(38, 127, 153)",
       },
     },
   ],

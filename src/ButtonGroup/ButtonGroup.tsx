@@ -1,7 +1,7 @@
 import React from "react";
 import { css, cx } from "linaria";
 import { StundButton } from "../Button/Button";
-import "../utils/global";
+import "../global.css";
 
 const StundButtonGroup = css`
   margin: 4px;

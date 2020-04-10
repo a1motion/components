@@ -1,13 +1,15 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { useStaticQuery, graphql, Link } from "gatsby";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { MDXProvider } from "@mdx-js/react";
 import { Title, Button, Menu } from "@a1motion/components";
 import "typeface-inter";
 import "typeface-fira-code";
 import { css, cx } from "linaria";
-import { Playground } from "./Playground";
-import CodeBlock from "./CodeBlock";
+import { Playground } from "../components/Playground";
+import CodeBlock from "../components/CodeBlock";
 
 export const globalStyles = css`
   :global() {
@@ -21,8 +23,9 @@ export const globalStyles = css`
     pre,
     code {
       font-size: 16px;
-      font-family: "Fire Code", source-code-pro, Menlo, Monaco, Consolas,
+      font-family: "Fira Code", source-code-pro, Menlo, Monaco, Consolas,
         "Courier New", monospace;
+      font-weight: 400;
     }
 
     html,
@@ -34,8 +37,7 @@ export const globalStyles = css`
       flex-direction: column;
     }
 
-    #___gatsby,
-    div#gatsby-focus-wrapper {
+    #__next {
       display: flex;
       flex: 1;
     }
@@ -98,7 +100,7 @@ const InlineCode = (props) => {
   return <code {...props} className={InlineCodeStyles} />;
 };
 
-const components = {
+const mdComponents = {
   h1: (props) => <Title level={1} {...props} />,
   h2: (props) => <Title level={2} {...props} />,
   h3: (props) => <Title level={3} {...props} />,
@@ -144,41 +146,80 @@ const ContentStyles = css`
   padding-left: 270px;
 `;
 
-type SidebarProps = {
-  activePage: string;
-};
+const components = [
+  {
+    name: "Avatar",
+    path: "/components/avatar",
+  },
+  {
+    name: "Button",
+    path: "/components/button",
+  },
+  {
+    name: "Button Group",
+    path: "/components/button-group",
+  },
+  {
+    name: "Card",
+    path: "/components/card",
+  },
+  {
+    name: "Form",
+    path: "/components/form",
+  },
+  {
+    name: "Input",
+    path: "/components/input",
+  },
+  {
+    name: "Loader",
+    path: "/components/loader",
+  },
+  {
+    name: "Menu",
+    path: "/components/menu",
+  },
+  {
+    name: "Settings Menu",
+    path: "/components/settings-menu",
+  },
+  {
+    name: "Switch",
+    path: "/components/switch",
+  },
+  {
+    name: "Title",
+    path: "/components/title",
+  },
+];
 
-const Sidebar: React.FC<SidebarProps> = ({ activePage }) => {
-  const {
-    allMdx: { nodes },
-  } = useStaticQuery(graphql`
-    {
-      allMdx {
-        nodes {
-          id
-          frontmatter {
-            title
-            path
-            name
-            menu
-          }
-        }
-      }
-    }
-  `);
-  const components = nodes
-    .filter((meta) => meta?.frontmatter?.menu === "component")
-    .sort((a, b) => a.frontmatter.name.localeCompare(b.frontmatter.name));
+const Sidebar = () => {
+  const router = useRouter();
   return (
     <div className={SidebarStyles}>
       <nav>
-        <Menu activeKeys={[activePage]}>
-          <Menu.SubMenu title={"Components"}>
+        <Menu activeKeys={[router.pathname]}>
+          <Menu.Item id={"/"}>
+            <Link href={"/"} passHref>
+              <Button type={"link"}>Home</Button>
+            </Link>
+          </Menu.Item>
+          <Menu.SubMenu
+            id={"/components"}
+            title={
+              <Link href={"/components"} passHref>
+                <Button type={"link"} size={"large"}>
+                  Components
+                </Button>
+              </Link>
+            }>
             {components.map((component) => {
               return (
-                <Menu.Item key={component.id} id={component.frontmatter.path}>
-                  <Link to={component.frontmatter.path}>
-                    <Button type={"link"}>{component.frontmatter.name}</Button>
+                <Menu.Item key={component.path} id={component.path}>
+                  <Link href={component.path} passHref>
+                    <a>
+                      <Button type={"link"}>{component.name}</Button>
+                    </a>
                   </Link>
                 </Menu.Item>
               );
@@ -190,16 +231,30 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage }) => {
   );
 };
 
-const Layout: React.FC<any> = ({ children, pageContext }) => {
-  console.log(pageContext);
+function generateTitle(pathname: string) {
+  const component = components.find((a) => a.path === pathname);
+  if (component) {
+    return `${component.name} - @a1motion/components`;
+  }
+
+  return "@a1motion/components";
+}
+
+export default ({ Component, pageProps }) => {
+  const router = useRouter();
   return (
-    <MDXProvider components={components}>
-      <div className={LayoutWrapper}>
-        <Sidebar activePage={pageContext.frontmatter.path} />
-        <div className={ContentStyles}>{children}</div>
-      </div>
-    </MDXProvider>
+    <>
+      <Head>
+        <title>{generateTitle(router.pathname)}</title>
+      </Head>
+      <MDXProvider components={mdComponents}>
+        <div className={LayoutWrapper}>
+          <Sidebar />
+          <div className={ContentStyles}>
+            <Component {...pageProps} />
+          </div>
+        </div>
+      </MDXProvider>
+    </>
   );
 };
-
-export default Layout;

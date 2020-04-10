@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { css, cx } from "linaria";
+import "../global.css";
 
 export type StepperProps = {
   className?: string;

@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { css, cx } from "linaria";
 import { colors } from "../utils";
 import Title, { TitleContainer } from "../Title/Title";
+import "../global.css";
 
 export interface BaseCardProps {
   header?: React.ReactNode;
@@ -10,6 +11,7 @@ export interface BaseCardProps {
   footer?: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  inline?: boolean;
 }
 export type CardProps = BaseCardProps &
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
@@ -43,6 +45,11 @@ const CardContainer = css`
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
 `;
 
+const CardInline = css`
+  display: inline-block;
+  min-width: 326px;
+`;
+
 const CardPadded = css`
   padding: 12px 16px;
 `;
@@ -54,6 +61,7 @@ const Card: React.FC<CardProps> = ({
   extra,
   footer,
   className,
+  inline,
   ...props
 }) => {
   const renderHeader = useCallback(() => {
@@ -77,7 +85,9 @@ const Card: React.FC<CardProps> = ({
     );
   }, [header, title, extra]);
   return (
-    <div className={cx(CardContainer, className)} {...props}>
+    <div
+      className={cx(CardContainer, inline && CardInline, className)}
+      {...props}>
       {renderHeader()}
       <div className={cx(CardPadded)}>{children}</div>
       {footer && (

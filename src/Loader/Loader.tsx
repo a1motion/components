@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "linaria";
 import { colors } from "../utils";
-import "../utils/global";
+import "../global.css";
 
 const LoaderBase = css`
   width: 60px;

@@ -4,12 +4,12 @@ export const breakpoints = {
   lg: "1200px",
 };
 export const fontSizes = {
-  h1: "4rem",
-  h2: "3rem",
-  h3: "2.25rem",
-  h4: "1.875rem",
-  h5: "1.5rem",
-  h6: "1.25rem",
+  h1: "3rem",
+  h2: "2.5rem",
+  h3: "2rem",
+  h4: "1.5rem",
+  h5: "1.25rem",
+  h6: "1rem",
 };
 export const createTransitions = (...props: string[]) =>
   props
