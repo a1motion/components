@@ -29,7 +29,7 @@ export { default as SettingsMenu } from "./SettingsMenu/SettingsMenu";
 export { default as Stepper, StepperItem } from "./Stepper/Stepper";
 export { default as Switch } from "./Switch/Switch";
 export { default as Title } from "./Title/Title";
-export * from "./utils/index";
+export * from "./utils";
 export type {
   AccessibleTextProps,
   AvatarProps,

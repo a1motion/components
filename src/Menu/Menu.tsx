@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useCallback, createContext, useContext } from "react";
 import { css, cx } from "linaria";
-import { lighten } from "polished";
 import { isElement } from "react-is";
 import { colors, createTransitions } from "../utils";
 import Button from "../Button/Button";
@@ -23,12 +22,7 @@ export type MenuProps = {
   openKeys?: string[];
 };
 
-const InternalMenuStyles = css`
-  margin-left: 18px;
-  & & {
-    margin-left: 0;
-  }
-`;
+const InternalMenuStyles = css``;
 
 type InternalMenuProps = MenuProps & {
   indent?: number;
@@ -65,11 +59,7 @@ const InternalMenu: React.FC<InternalMenuProps> = ({
       return React.cloneElement(child, newProps);
     });
   }, [children]);
-  return (
-    <ul className={cx(InternalMenuStyles)} style={{ paddingLeft: indent * 18 }}>
-      {renderChildren()}
-    </ul>
-  );
+  return <ul className={cx(InternalMenuStyles)}>{renderChildren()}</ul>;
 };
 
 export type MenuItemProps = {
@@ -85,23 +75,30 @@ const MenuItemStyles = css`
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 4px;
-  border-top-left-radius: 32px;
-  border-bottom-left-radius: 32px;
   background-color: #fff;
   transition: ${createTransitions("background-color")};
+  position: relative;
 `;
 
 const MenuItemActive = css`
-  background-color: ${lighten(0.1, colors["color-primary"])};
-  & button,
-  & a,
-  & a:hover,
-  & button:hover {
-    color: ${colors["color-basic-300"]};
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: ${colors["color-primary"]};
+    border-radius: 4px;
   }
 `;
 
-const MenuItem: React.FC<MenuItemProps> = ({ children, title, id }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  children,
+  title,
+  id,
+  indent = 0,
+}) => {
   const { activeKeys } = useContext(MenuContext);
   const renderChildren = useCallback(() => {
     if (children) {
@@ -112,6 +109,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, title, id }) => {
   }, [children, title]);
   return (
     <li
+      style={{ paddingLeft: indent * 18 }}
       className={cx(
         MenuItemStyles,
         id && activeKeys.includes(id) && MenuItemActive
@@ -133,12 +131,12 @@ const SubMenu: React.FC<MenuItemProps> = ({
       return title;
     }
 
-    return <Button label={title} type={"link"} size={"large"} />;
+    return <Button label={title} type={"link"} />;
   }, [title]);
   return (
     <li>
       <div
-        style={{ paddingLeft: (indent * 24) / 2 }}
+        style={{ paddingLeft: indent * 18 }}
         className={cx(
           MenuItemStyles,
           id && activeKeys.includes(id) && MenuItemActive

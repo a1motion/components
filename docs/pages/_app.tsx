@@ -20,6 +20,13 @@ export const globalStyles = css`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+    @supports (font-variation-settings: normal) {
+      html {
+        font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif !important;
+      }
+    }
     pre,
     code {
       font-size: 16px;
@@ -208,9 +215,7 @@ const Sidebar = () => {
             id={"/components"}
             title={
               <Link href={"/components"} passHref>
-                <Button type={"link"} size={"large"}>
-                  Components
-                </Button>
+                <Button type={"link"}>Components</Button>
               </Link>
             }>
             {components.map((component) => {
