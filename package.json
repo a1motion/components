@@ -15,8 +15,7 @@
     "lib/*"
   ],
   "sideEffects": [
-    "*.css",
-    "lib/utils/global.js"
+    "*.css"
   ],
   "dependencies": {
     "linaria": "^1.4.0-beta.1",

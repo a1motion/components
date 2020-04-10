@@ -5,3 +5,4 @@ yarn.lock
 .next/
 .linaria-cache/
 docs/out/
+.now
