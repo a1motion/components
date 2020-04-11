@@ -71,13 +71,18 @@ export type MenuItemProps = {
 const MenuItemStyles = css`
   height: 40px;
   line-height: 40px;
-  padding: 0 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 4px;
   background-color: #fff;
   transition: ${createTransitions("background-color")};
   position: relative;
+  & a {
+    line-height: 40px;
+    height: 40px;
+    width: 100%;
+    text-align: left;
+  }
 `;
 
 const MenuItemActive = css`

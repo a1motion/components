@@ -10,6 +10,7 @@ export interface BaseCardProps {
   extra?: React.ReactNode;
   footer?: React.ReactNode;
   className?: string;
+  bodyClassName?: string;
   onClick?: () => void;
   inline?: boolean;
 }
@@ -62,6 +63,7 @@ const Card: React.FC<CardProps> = ({
   footer,
   className,
   inline,
+  bodyClassName,
   ...props
 }) => {
   const renderHeader = useCallback(() => {
@@ -89,7 +91,7 @@ const Card: React.FC<CardProps> = ({
       className={cx(CardContainer, inline && CardInline, className)}
       {...props}>
       {renderHeader()}
-      <div className={cx(CardPadded)}>{children}</div>
+      <div className={cx(CardPadded, bodyClassName)}>{children}</div>
       {footer && (
         <div className={cx(CardPadded, CardHeaderFooter, CardFooter)}>
           {footer}

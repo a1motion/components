@@ -169,6 +169,10 @@ const StundButtonLoader = css`
   justify-content: center;
 `;
 
+const StundButtonBlock = css`
+  display: block;
+`;
+
 export interface BaseButtonProps {
   label?: string;
   status?: "default" | "primary" | "danger" | "control";
@@ -177,6 +181,7 @@ export interface BaseButtonProps {
   loading?: boolean;
   // eslint-disable-next-line quotes
   htmlType?: JSX.IntrinsicElements["button"]["type"];
+  block?: boolean;
 }
 export type ButtonProps = BaseButtonProps &
   // eslint-disable-next-line quotes, @typescript-eslint/ban-types
@@ -199,6 +204,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       loading,
       onClick,
       children,
+      block,
       ...props
     },
     ref
@@ -251,6 +257,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         type === "outline" && StundButtonOutline,
         size === "small" && StundButtonSmall,
         size === "large" && StundButtonLarge,
+        block && StundButtonBlock,
         className
       );
     }, [status, size, className]);

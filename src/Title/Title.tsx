@@ -8,7 +8,6 @@ export interface BaseTitleProps {
   align?: "left" | "center" | "right";
   invert?: boolean;
 }
-export const BaseTitle: React.FC<BaseTitleProps> = () => null;
 // eslint-disable-next-line quotes
 export type TitleProps = BaseTitleProps & JSX.IntrinsicElements["h1"];
 export const TitleContainer = css`

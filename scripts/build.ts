@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import execa from "execa";
-import { transformFileAsync } from "@babel/core";
+import { transformFileAsync, transformFromAstAsync } from "@babel/core";
 import transform from "linaria/lib/transform";
 import globby from "globby";
 import clean from "./clean";
@@ -105,11 +105,31 @@ const src = path.join(root, "src");
 const lib = path.join(root, "lib");
 
 export async function buildOutFile(file: string) {
-  const { code, map } = await transformFileAsync(file, {
+  /**
+   * Transform the file with the react, typescript and linaria plugins.
+   *
+   * The result will include some unused exports that were evaulated during
+   * the linaria build phase.
+   */
+  const firstRun = await transformFileAsync(file, {
     configFile: path.join(__dirname, "..", ".babelrc.js"),
     sourceMaps: true,
     filename: path.join(root, file),
+    ast: true,
   });
+  /**
+   * Reuse the existing ast to remove any unused imports,
+   * like `css` and any polished imports.
+   */
+  const { code, map } = await transformFromAstAsync(
+    firstRun.ast,
+    firstRun.code,
+    {
+      plugins: [path.join(__dirname, "remove-imports.js")],
+      filename: path.join(root, file),
+      inputSourceMap: firstRun.map,
+    }
+  );
   let outputFile = path.join(path.relative(src, file));
   outputFile = path.join(
     lib,
