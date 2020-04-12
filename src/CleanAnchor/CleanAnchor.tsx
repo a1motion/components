@@ -7,11 +7,15 @@ const CleanedAnchor = css`
   text-decoration: none;
 `;
 
-const CleanAnchor: React.FC<IntrinsicProps<HTMLAnchorElement>> = ({
-  className,
-  ...props
-}) => {
-  return <a {...props} className={cx(CleanedAnchor, className)} />;
-};
+const CleanAnchor = React.forwardRef<
+  HTMLAnchorElement,
+  IntrinsicProps<HTMLAnchorElement>
+>(({ className, ...props }, ref) => {
+  return <a {...props} ref={ref} className={cx(CleanedAnchor, className)} />;
+});
+
+if (process.env.NODE_ENV !== "production") {
+  CleanAnchor.displayName = "CleanAnchor";
+}
 
 export default CleanAnchor;
