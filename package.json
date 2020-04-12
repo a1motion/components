@@ -9,7 +9,7 @@
     "ts": "ts-node -O '{\"module\":\"commonjs\"}' -T",
     "lint": "eslint --format=pretty '**/*.{js,ts,jsx,tsx}'",
     "docs-start": "next dev docs",
-    "docs-build": "next build docs && next export docs && mv docs/.next .next && mv docs/out out"
+    "docs-build": "next build docs && next export docs"
   },
   "files": [
     "lib/*"
