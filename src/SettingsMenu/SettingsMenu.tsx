@@ -101,7 +101,11 @@ const SettingsMenuItem: React.FC<SettingsMenuItemProps> = ({
   }, [action]);
   return (
     <SettingsMenuItemContainer href={href} link={link}>
-      <div className={cx(SettingsItem, onPress && SettingsItemsClickable)}>
+      <div
+        className={cx(
+          SettingsItem,
+          (onPress || href) && SettingsItemsClickable
+        )}>
         <div className={cx(SettingsItemsMain)}>
           <Title level={6}>{name}</Title>
         </div>
