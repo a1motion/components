@@ -1,5 +1,5 @@
 const path = require("path");
-const withTM = require("next-transpile-modules")(["ky"]);
+const withTM = require("next-transpile-modules")(["ky", "react-feather"]);
 const withCSS = require("@zeit/next-css");
 const withFonts = require("next-fonts");
 const withMDX = require("@next/mdx")({
