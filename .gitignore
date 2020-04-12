@@ -1,7 +1,6 @@
 *.log
 lib/
 node_modules/
-yarn.lock
 .next/
 .linaria-cache/
 out/
