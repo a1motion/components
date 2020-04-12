@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export const breakpoints = {
   sm: "601px",
   md: "992px",
@@ -106,3 +107,24 @@ export const colors = {
   "color-danger-transparent-500": "rgba(255, 108, 71, 0.4)",
   "color-danger-transparent-600": "rgba(255, 108, 71, 0.48)",
 };
+export type IntrinsicProps<T> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>;
+// Source: https://github.com/emotion-js/emotion/blob/master/packages/styled-base/types/helper.d.ts
+export type PropsOf<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  E extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
+> = JSX.LibraryManagedAttributes<E, React.ComponentPropsWithRef<E>>;
+export interface BoxOwnProps<E extends React.ElementType = React.ElementType> {
+  as?: E;
+}
+export type BoxProps<E extends React.ElementType> = BoxOwnProps<E> &
+  Omit<PropsOf<E>, keyof BoxOwnProps>;
+export type PolymorphicComponentProps<E extends React.ElementType, P> = P &
+  BoxProps<E>;
+export type PolymorphicComponent<P, D extends React.ElementType = "div"> = <
+  E extends React.ElementType = D
+>(
+  props: PolymorphicComponentProps<E, P>
+) => JSX.Element;

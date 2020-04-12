@@ -20,6 +20,7 @@ export { default as Box } from "./Box/Box";
 export { default as Button } from "./Button/Button";
 export { default as ButtonGroup } from "./ButtonGroup/ButtonGroup";
 export { default as Card } from "./Card/Card";
+export { default as CleanAnchor } from "./CleanAnchor/CleanAnchor";
 export { default as Container } from "./Container/Container";
 export { default as Form, FormItem } from "./Form/Form";
 export { default as Input } from "./Input/Input";
