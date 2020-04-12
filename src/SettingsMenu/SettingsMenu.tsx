@@ -32,6 +32,8 @@ export type SettingsMenuItemProps = {
   description?: string;
   action?: React.ReactNode;
   onPress?: () => void;
+  href?: string;
+  link?: React.ComponentType<{ href: string; [key: string]: any }>;
 };
 
 const SettingsItem = css`
@@ -66,29 +68,46 @@ const SettingsItemsClickable = css`
   }
 `;
 
+const SettingsMenuItemContainer: React.FC<SettingsMenuItemProps> = ({
+  children,
+  href,
+  link,
+}) => {
+  if (href) {
+    const Component = link ? link : "a";
+    return <Component href={href}>{children}</Component>;
+  }
+
+  return <>{children}</>;
+};
+
 const SettingsMenuItem: React.FC<SettingsMenuItemProps> = ({
   name,
   action,
   onPress,
+  href,
+  link,
 }) => {
   const renderAction = useCallback(() => {
     if (action) {
       return action;
     }
 
-    if (onPress) {
+    if (onPress || href) {
       return <ChevronRight size={18} />;
     }
 
     return null;
   }, [action]);
   return (
-    <div className={cx(SettingsItem, onPress && SettingsItemsClickable)}>
-      <div className={cx(SettingsItemsMain)}>
-        <Title level={6}>{name}</Title>
+    <SettingsMenuItemContainer href={href} link={link}>
+      <div className={cx(SettingsItem, onPress && SettingsItemsClickable)}>
+        <div className={cx(SettingsItemsMain)}>
+          <Title level={6}>{name}</Title>
+        </div>
+        <div className={cx(SettingsItemsAction)}>{renderAction()}</div>
       </div>
-      <div className={cx(SettingsItemsAction)}>{renderAction()}</div>
-    </div>
+    </SettingsMenuItemContainer>
   );
 };
 
