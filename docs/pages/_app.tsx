@@ -235,11 +235,6 @@ const Sidebar = () => {
               );
             })}
           </Menu.SubMenu>
-          <Menu.Item id={"/"}>
-            <Link href={"/"} passHref>
-              <Button type={"link"}>Home</Button>
-            </Link>
-          </Menu.Item>
         </Menu>
       </nav>
     </div>
