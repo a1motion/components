@@ -30,9 +30,10 @@ const CardHeader = css`
     margin: 0;
     flex: 1;
   }
-  & div {
-    flex: 0;
-  }
+`;
+
+const CardHeaderExtra = css`
+  flex: 0;
 `;
 
 const CardFooter = css`
@@ -75,7 +76,7 @@ const Card: React.FC<CardProps> = ({
       return (
         <div className={cx(CardPadded, CardHeaderFooter, CardHeader)}>
           <Title level={6}>{title}</Title>
-          {extra && <div>{extra}</div>}
+          {extra && <div className={cx(CardHeaderExtra)}>{extra}</div>}
         </div>
       );
     }
