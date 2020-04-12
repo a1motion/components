@@ -171,6 +171,10 @@ const components = [
     path: "/components/card",
   },
   {
+    name: "Clean Anchor",
+    path: "/components/clean-anchor",
+  },
+  {
     name: "Form",
     path: "/components/form",
   },
@@ -212,6 +216,7 @@ const Sidebar = () => {
             </Link>
           </Menu.Item>
           <Menu.SubMenu
+            collapsible
             id={"/components"}
             title={
               <Link href={"/components"} passHref>
@@ -230,6 +235,11 @@ const Sidebar = () => {
               );
             })}
           </Menu.SubMenu>
+          <Menu.Item id={"/"}>
+            <Link href={"/"} passHref>
+              <Button type={"link"}>Home</Button>
+            </Link>
+          </Menu.Item>
         </Menu>
       </nav>
     </div>

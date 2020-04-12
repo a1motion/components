@@ -1,7 +1,7 @@
 {
   "name": "@a1motion/components",
   "version": "1.0.2",
-  "main": "lib/",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "watch": "yarn ts scripts/watch.ts",
