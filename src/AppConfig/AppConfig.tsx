@@ -1,14 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 export interface IAppConfig {
-  mode: "light" | "dark";
+  mode: "light" | "dark" | "system";
 }
 export const defaultAppConfig: IAppConfig = {
   mode: "light",
 };
 export const AppConfig = React.createContext(defaultAppConfig);
+
+const getTheme = () =>
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+
 export function useAppConfig() {
-  return useContext(AppConfig);
+  const [systemTheme, setSystemTheme] = useState<"dark" | "light">(getTheme());
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (window.matchMedia) {
+      const mql = window.matchMedia("(prefers-color-scheme: dark)");
+      const handler = (e: MediaQueryListEvent) => {
+        setSystemTheme(e.matches ? "dark" : "light");
+      };
+
+      mql.addListener(handler);
+      return () => mql.removeListener(handler);
+    }
+  }, []);
+  const { ...config } = useContext(AppConfig);
+  if (config.mode === "system") {
+    config.mode = systemTheme;
+  }
+
+  return config;
 }
 
 export type WithAppConfigProps = {
