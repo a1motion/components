@@ -83,6 +83,7 @@ const SettingsMenuItemContainer: React.FC<SettingsMenuItemProps> = ({
 
 const SettingsMenuItem: React.FC<SettingsMenuItemProps> = ({
   name,
+  description,
   action,
   onPress,
   href,
@@ -108,6 +109,7 @@ const SettingsMenuItem: React.FC<SettingsMenuItemProps> = ({
         )}>
         <div className={cx(SettingsItemsMain)}>
           <Title level={6}>{name}</Title>
+          {description ? <p>{description}</p> : null}
         </div>
         <div className={cx(SettingsItemsAction)}>{renderAction()}</div>
       </div>
