@@ -1,6 +1,5 @@
 import React from "react";
 import { css, cx } from "linaria";
-import type { IntrinsicProps } from "../utils";
 
 const CleanedAnchor = css`
   color: inherit;
@@ -9,7 +8,7 @@ const CleanedAnchor = css`
 
 const CleanAnchor = React.forwardRef<
   HTMLAnchorElement,
-  IntrinsicProps<HTMLAnchorElement>
+  JSX.IntrinsicElements["a"]
 >(({ className, ...props }, ref) => {
   return <a {...props} ref={ref} className={cx(CleanedAnchor, className)} />;
 });
