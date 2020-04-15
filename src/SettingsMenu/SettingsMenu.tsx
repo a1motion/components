@@ -13,7 +13,7 @@ export type SettingsMenuType = React.FC<SettingsMenuProps> & {
 };
 
 const OverrideCardStyles = css`
-  padding: 0;
+  padding: 0 !important;
 `;
 
 const SettingsMenu: SettingsMenuType = ({ children, inline, ...cardProps }) => {

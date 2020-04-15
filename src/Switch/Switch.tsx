@@ -50,7 +50,7 @@ const SwitchLabel = css`
 `;
 
 const SwitchLoader = css`
-  position: absolute;
+  position: absolute !important;
   top: 0.4em;
   left: calc(100% - 1.6em);
   bottom: 0.4em;
