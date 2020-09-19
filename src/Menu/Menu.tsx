@@ -3,7 +3,7 @@ import React, { useCallback, createContext, useContext, useState } from "react";
 import { css, cx } from "linaria";
 import { isElement } from "react-is";
 import ChevronRight from "react-feather/dist/icons/chevron-right";
-import { colors, createTransitions } from "../utils";
+import { createTransitions } from "../utils";
 import Button from "../Button/Button";
 import Collapsible from "../Collapsible/Collapsible";
 import "../global.css";
@@ -65,7 +65,7 @@ const InternalMenu: React.FC<InternalMenuProps> = React.forwardRef<
     });
   }, [children]);
   return (
-    <ul ref={ref} className={cx(InternalMenuStyles)}>
+    <ul role={"menu"} ref={ref} className={cx(InternalMenuStyles)}>
       {renderChildren()}
     </ul>
   );
@@ -86,28 +86,21 @@ const MenuItemStyles = css`
   line-height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 4px;
-  background-color: #fff;
   transition: ${createTransitions("background-color")};
   position: relative;
-  & a {
-    line-height: 40px;
-    height: 40px;
-    width: 100%;
-    text-align: left;
+  border-radius: 6px;
+  margin: 4px 10px 0 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: var(--color-basic-1);
   }
 `;
 
 const MenuItemActive = css`
-  &:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background-color: ${colors["color-primary"]};
-    border-radius: 4px;
+  .menu-item& {
+    background-color: var(--color-primary-6);
   }
 `;
 
@@ -127,10 +120,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
   }, [children, title]);
   return (
     <li
+      role={"menuitem"}
+      aria-selected={!!(id && activeKeys.includes(id))}
       style={{ paddingLeft: indent * 18 }}
       className={cx(
         MenuItemStyles,
-        id && activeKeys.includes(id) && MenuItemActive
+        "menu-item",
+        id && activeKeys.includes(id) && MenuItemActive,
+        id && activeKeys.includes(id) && "menu-item-active"
       )}>
       {renderChildren()}
     </li>
@@ -146,6 +143,12 @@ const SubMenuCollapseItem = css`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  .menu-item:hover > & {
+    color: var(--color-primary-7);
+  }
+  .menu-item-active > & {
+    color: var(--color-1) !important;
+  }
 `;
 
 const SubMenuCollapseItemIcon = css`
@@ -197,10 +200,18 @@ const SubMenu: React.FC<SubMenuProps> = ({
     );
   }, [collapsible, isCollapsed, setCollapsed]);
   return (
-    <li>
+    <li
+      role={"menuitem"}
+      aria-selected={!!(id && activeKeys.includes(id))}
+      className={cx(
+        "menu-item",
+        id && activeKeys.includes(id) && "menu-item-active"
+      )}>
       <div
         style={{ paddingLeft: indent * 18 }}
         className={cx(
+          "menu-item",
+          id && activeKeys.includes(id) && "menu-item-active",
           MenuItemStyles,
           id && activeKeys.includes(id) && MenuItemActive
         )}>

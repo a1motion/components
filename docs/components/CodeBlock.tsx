@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { css, cx } from "linaria";
+import { useTheme, useIsomorphicEffect } from "@a1motion/components";
 import Highlight, { defaultProps, PrismTheme } from "prism-react-renderer";
 import vsdark from "./themes/vsdark";
 import vslight from "./themes/vslight";
@@ -13,13 +14,34 @@ const CodeBlock: React.FC<{ className?: string; language?: string }> = ({
   className: _className,
   language: _language,
 }) => {
+  const [show, setShow] = useState(false);
+  useIsomorphicEffect(() => {
+    if (process.browser) {
+      setTimeout(() => {
+        setShow(true);
+      }, 0);
+    }
+  }, []);
+  const theme = useTheme();
+  if (!show) {
+    return (
+      <div
+        className={CodeBlockStyles}
+        style={{
+          padding: 20,
+          height: (children as string).trim().split("\n").length * 24 + 40,
+        }}
+      />
+    );
+  }
+
   const language =
     _language || ((_className ?? "").replace(/language-/, "") as any);
   return (
     <Highlight
       {...defaultProps}
       code={(children as any).trim()}
-      theme={vsdark as PrismTheme}
+      theme={(theme === "dark" ? vsdark : vslight) as PrismTheme}
       language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre

@@ -1,8 +1,10 @@
 import React, { useCallback } from "react";
+import { LiteralUnion } from "type-fest";
 import { css, cx } from "linaria";
-import { colors } from "../utils";
 import Title, { TitleContainer } from "../Title/Title";
 import "../global.css";
+
+type CardTypes = LiteralUnion<"default" | "primary" | "danger", string>;
 
 export interface BaseCardProps {
   header?: React.ReactNode;
@@ -13,19 +15,31 @@ export interface BaseCardProps {
   bodyClassName?: string;
   onClick?: () => void;
   inline?: boolean;
+  type?: CardTypes;
 }
 export type CardProps = BaseCardProps &
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 const CardHeaderFooter = css`
-  background: rgb(246, 248, 250);
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
+const CardHeaderFooterDefault = css`
+  background: var(--color-basic-1);
+`;
+
+const CardHeaderFooterPrimary = css`
+  background: var(--card-primary);
+`;
+
+const CardHeaderFooterDanger = css`
+  background: var(--color-basic-1);
+`;
+
 const CardHeader = css`
-  border-bottom: 1px solid ${colors["color-basic-500"]};
+  border-bottom: 1px solid var(--basic-border-color);
   & .${TitleContainer} {
     margin: 0;
     flex: 1;
@@ -37,13 +51,13 @@ const CardHeaderExtra = css`
 `;
 
 const CardFooter = css`
-  border-top: 1px solid ${colors["color-basic-500"]};
+  border-top: 1px solid var(--basic-border-color);
 `;
 
 const CardContainer = css`
   overflow: hidden;
   border-radius: 6px;
-  border: 1px solid ${colors["color-basic-500"]};
+  border: 1px solid var(--basic-border-color);
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
 `;
 
@@ -53,7 +67,7 @@ const CardInline = css`
 `;
 
 const CardPadded = css`
-  padding: 12px 16px;
+  padding: 16px;
 `;
 
 const Card: React.FC<CardProps> = ({
@@ -65,6 +79,7 @@ const Card: React.FC<CardProps> = ({
   className,
   inline,
   bodyClassName,
+  type,
   ...props
 }) => {
   const renderHeader = useCallback(() => {
@@ -72,9 +87,23 @@ const Card: React.FC<CardProps> = ({
       return null;
     }
 
+    const classes = cx(
+      CardPadded,
+      CardHeaderFooter,
+      CardHeader,
+      type === "primary" && CardHeaderFooterPrimary,
+      type === "default" && CardHeaderFooterDefault,
+      type === "danger" && CardHeaderFooterDanger
+    );
+
+    const backgroundColor =
+      type && !["primary", "default", "danger"].includes(type)
+        ? { backgroundColor: type }
+        : undefined;
+
     if (!header) {
       return (
-        <div className={cx(CardPadded, CardHeaderFooter, CardHeader)}>
+        <div className={classes} style={backgroundColor}>
           <Title level={6}>{title}</Title>
           {extra && <div className={cx(CardHeaderExtra)}>{extra}</div>}
         </div>
@@ -82,11 +111,11 @@ const Card: React.FC<CardProps> = ({
     }
 
     return (
-      <div className={cx(CardPadded, CardHeaderFooter, CardHeader)}>
+      <div className={classes} style={backgroundColor}>
         {header}
       </div>
     );
-  }, [header, title, extra]);
+  }, [header, title, extra, type]);
   return (
     <div
       className={cx(CardContainer, inline && CardInline, className)}
@@ -100,6 +129,10 @@ const Card: React.FC<CardProps> = ({
       )}
     </div>
   );
+};
+
+Card.defaultProps = {
+  type: "default",
 };
 
 export default Card;

@@ -19,13 +19,11 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "sourceMap": true,
-    "rootDir": "./src",
-    "outDir": "./lib",
     "allowJs": true,
     "module": "ESNext",
     "composite": true,
     "incremental": true
   },
   "exclude": ["lib", "src/**/*.test.tsx"],
-  "include": ["index.d.ts", "src"]
+  "include": ["index.d.ts", "src", "scripts"]
 }

@@ -4,12 +4,13 @@ import { Button, Card } from "@a1motion/components";
 
 ### Properties
 
-| Property | Description                                   | Type                                   | Default |
-| -------- | --------------------------------------------- | -------------------------------------- | ------- |
-| header   | Header Node **(overrides title and extra)**   | `React.ReactNode`                      |         |
-| title    | Header Title                                  | `string`                               |         |
-| extra    | Extra node to render at the end of the header | `React.ReactNode`                      |         |
-| footer   | Footer Node                                   | `React.ReactNode`                      |         |
+| Property | Description                                   | Type                                           | Default |
+| -------- | --------------------------------------------- | ---------------------------------------------- | ------- |
+| header   | Header Node **(overrides title and extra)**   | `React.ReactNode`                              |         |
+| title    | Header Title                                  | `string`                                       |         |
+| extra    | Extra node to render at the end of the header | `React.ReactNode`                              |         |
+| footer   | Footer Node                                   | `React.ReactNode`                              |         |
+| type     | Changes the color of the card                 | `default` \| `primary` \| `danger` \| `string` |         |
 
 ### Basic usage
 
@@ -31,11 +32,35 @@ import { Button, Card } from "@a1motion/components";
   </Card>
 </Playground>
 
-
 ### Extra Content in Footer
 
 <Playground>
-  <Card title={`Card Title`} footer={<div><Button size={`small`}>Hello</Button></div>}>
+  <Card
+    title={"Card Title"}
+    footer={
+      <div>
+        <Button size={"small"}>Hello</Button>
+      </div>
+    }
+  >
+    <div>Content</div>
+    <div>Content</div>
+    <div>Content</div>
+  </Card>
+</Playground>
+
+### Colors
+
+<Playground>
+  <Card title={"Card Title"} type={"primary"}>
+    <div>Content</div>
+    <div>Content</div>
+    <div>Content</div>
+  </Card>
+</Playground>
+
+<Playground>
+  <Card title={"Card Title"} type={"danger"}>
     <div>Content</div>
     <div>Content</div>
     <div>Content</div>

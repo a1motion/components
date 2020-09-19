@@ -16,14 +16,14 @@ export interface PlaygroundComponentProps {
 }
 
 const PlaygroundWrapper = css`
-  border: 1px solid #ddd;
+  border: 1px solid var(--basic-border-color);
   border-radius: 4px;
   margin-bottom: 24px;
 `;
 
 const ComponentWrapper = css`
   padding: 20px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--basic-border-color);
 `;
 
 const CodeWrapper = css`

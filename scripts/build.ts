@@ -2,9 +2,22 @@ import path from "path";
 import fs from "fs";
 import execa from "execa";
 import { transformFileAsync, transformFromAstAsync } from "@babel/core";
+//@ts-ignore
 import transform from "linaria/lib/transform";
 import globby from "globby";
+import postcss from "postcss";
+import cssvariables from "postcss-custom-properties";
 import clean from "./clean";
+const {
+  generateTheme,
+}: {
+  generateTheme: (
+    primary: string,
+    secondary: string,
+    selector?: string,
+    build?: boolean
+  ) => string;
+} = require("../src/utils/theme");
 
 /**
  * Returns the resulting filename for the css
@@ -38,6 +51,16 @@ function rewiteCSSSourceMaps(map: string, input: string) {
   return JSON.stringify(sourceMap);
 }
 
+const defaultCssVariables = generateTheme("#2148d9", "#fff", undefined, true)
+  .split("\n")
+  .map((a) => a.trim())
+  .filter(Boolean)
+  .reduce((a, b) => {
+    const [name, value] = b.split(": ");
+    a[name] = value.replace(/;$/, "");
+    return a;
+  }, {} as { [key: string]: string });
+
 export async function buildFileAsync(file: string) {
   const outputFilename = resolveOutputFilename(
     file,
@@ -52,14 +75,30 @@ export async function buildFileAsync(file: string) {
     }
   );
   if (cssText) {
+    const postcssOutput = await postcss([
+      cssvariables({
+        preserve: true,
+        importFrom: {
+          customProperties: defaultCssVariables,
+        },
+      }) as any,
+    ])
+      .process(cssText, {
+        map: {
+          prev: cssSourceMapText,
+        },
+      })
+      .async();
     await fs.promises.mkdir(path.dirname(outputFilename), { recursive: true });
     await fs.promises.writeFile(
       outputFilename,
-      `${cssText}\n/*# sourceMappingURL=${path.basename(outputFilename)}.map */`
+      `${postcssOutput.css}\n/*# sourceMappingURL=${path.basename(
+        outputFilename
+      )}.map */`
     );
     await fs.promises.writeFile(
       `${outputFilename}.map`,
-      rewiteCSSSourceMaps(cssSourceMapText!, outputFilename)
+      rewiteCSSSourceMaps(postcssOutput.map.toString(), outputFilename)
     );
 
     const normalizedInputFilename = resolveRequireInsertionFilename(
@@ -121,15 +160,15 @@ export async function buildOutFile(file: string) {
    * Reuse the existing ast to remove any unused imports,
    * like `css` and any polished imports.
    */
-  const { code, map } = await transformFromAstAsync(
-    firstRun.ast,
-    firstRun.code,
+  const { code, map } = (await transformFromAstAsync(
+    firstRun!.ast!.program,
+    firstRun!.code!,
     {
       plugins: [path.join(__dirname, "remove-imports.js")],
       filename: path.join(root, file),
-      inputSourceMap: firstRun.map,
+      inputSourceMap: firstRun!.map!,
     }
-  );
+  ))!;
   let outputFile = path.join(path.relative(src, file));
   outputFile = path.join(
     lib,
@@ -149,11 +188,15 @@ export async function buildOutFile(file: string) {
 function build() {
   clean();
   fs.mkdirSync(lib);
-  execa.commandSync("tsc", {
+  execa.commandSync("tsc --project tsconfig.build.json", {
     cwd: path.join(__dirname, ".."),
     stdio: "inherit",
   });
   fs.copyFileSync(path.join(src, "global.css"), path.join(lib, "global.css"));
+  fs.writeFileSync(
+    path.join(lib, "theme.css"),
+    generateTheme("#2148d9", "#fff")
+  );
   const files = globby.sync([
     "src/**/*.{ts,tsx}",
     "!src/**/*.test.tsx",

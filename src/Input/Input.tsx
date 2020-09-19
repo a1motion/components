@@ -1,15 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { css, cx } from "linaria";
-import { baseBorderRadius, colors } from "../utils";
 import Loader from "../Loader/Loader";
 import "../global.css";
-
-const StundInputContainer = css`
-  position: relative;
-  display: inline-block;
-  display: block;
-  width: 100%;
-`;
 
 const StundInputIsActive = css``;
 const StundInputLoading = css``;
@@ -19,51 +11,62 @@ const StundInputInline = css`
   width: auto;
 `;
 
+const StundInputContainer = css`
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 56px;
+  border-radius: 6px;
+  border: 2px solid var(--basic-border-color);
+  background: var(--layout-background-color);
+  &:not(.${StundInputInline}) {
+    margin: 11px 0;
+  }
+  &.${StundInputIsActive} {
+    border-color: var(--color-primary-5);
+  }
+`;
+
 const StundInput = css`
-  height: 48px;
-  padding: 0 16px;
-  border-radius: ${baseBorderRadius};
-  background-color: #ffffff !important;
-  border: 2px solid ${colors["color-basic-500"]};
-  font-size: 12px;
+  font-size: 16px;
+  line-height: 20px;
+  border: none;
   font: inherit;
+  color: var(--text-color);
+  background: var(--layout-background-color);
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
   appearance: none;
   outline: none;
   display: block;
   width: 100%;
-  &:not(.${StundInputInline}) {
-    margin: 11px 0;
-  }
+  margin: 12px 10px;
   &::placeholder {
     font-weight: 500;
   }
-  &:focus {
-    border-color: ${colors["color-primary-400"]};
-  }
-  &:focus ~ span {
-    color: ${colors["color-primary-600"]};
-  }
+
   .${StundInputLoading} & {
     padding-left: 32px;
   }
 `;
 
+const InputHasLabel = css`
+  margin: 26px 12px 10px;
+`;
+
 const StundInputLabel = css`
-  color: ${colors["color-primary-500"]};
-  font-size: 14px;
+  color: var(--color-basic-6);
+  font-size: 16px;
   font-weight: 800;
   position: absolute;
   top: 2px;
-  left: 12px;
-  transform: translateY(25%);
-  opacity: 0;
+  left: 8px;
+  transform: translateY(50%);
   transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
-  background-color: white;
   padding: 0 4px;
   .${StundInputIsActive} & {
-    opacity: 1;
-    transform: translateY(-11px);
+    transform: translateY(0);
+    font-size: 13px;
+    color: var(--color-primary-6);
   }
   .${StundInputLoading} & {
     left: 33px;
@@ -71,27 +74,23 @@ const StundInputLabel = css`
 `;
 
 const StundInputSuccess = css`
-  & .${StundInput} {
-    border-color: ${colors["color-success-600"]} !important;
-  }
+  border-color: var(--color-success-6) !important;
   & .${StundInput}::placeholder, & .${StundInputLabel} {
-    color: ${colors["color-success-600"]} !important;
+    color: var(--color-success-6) !important;
   }
 `;
 
 const StundInputError = css`
-  & .${StundInput} {
-    border-color: ${colors["color-danger-600"]} !important;
-  }
+  border-color: var(--color-danger-6) !important;
   & .${StundInput}::placeholder, & .${StundInputLabel} {
-    color: ${colors["color-danger-600"]} !important;
+    color: var(--color-danger-6) !important;
   }
 `;
 
 const StundInputLoader = css`
   position: absolute;
   left: 10px;
-  top: 14px;
+  top: 16px;
 `;
 
 export interface BaseInputProps {
@@ -115,10 +114,14 @@ const Input: React.FC<InputProps> = ({
   onChange,
   loading,
   status,
+  onBlur,
+  onFocus,
+  autoFocus,
   ...props
 }) => {
-  const [active, setActive] = useState<boolean>(!!(value || defaultValue));
   const [_value, setValue] = useState(defaultValue || "");
+  const [hasFocus, setHasFocus] = useState(autoFocus);
+  const active = !!_value || hasFocus;
   const _onChange = useCallback(
     (e) => {
       if (loading) {
@@ -126,7 +129,6 @@ const Input: React.FC<InputProps> = ({
       }
 
       const { value } = e.target;
-      setTimeout(() => setActive(value.length !== 0), 100);
 
       setValue(value);
       if (onChange) {
@@ -149,10 +151,23 @@ const Input: React.FC<InputProps> = ({
         {...props}
         value={value || _value}
         onChange={_onChange}
-        placeholder={label}
-        className={cx(StundInput, inline && StundInputInline, className)}
+        className={cx(
+          StundInput,
+          inline && StundInputInline,
+          label && InputHasLabel,
+          className
+        )}
+        autoFocus={autoFocus}
+        onFocus={(e) => {
+          setHasFocus(true);
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          setHasFocus(false);
+          onBlur?.(e);
+        }}
       />
-      <span className={cx(StundInputLabel)}>{label}</span>
+      {label && <span className={cx(StundInputLabel)}>{label}</span>}
       {loading && <Loader className={StundInputLoader} size={20} />}
     </label>
   );

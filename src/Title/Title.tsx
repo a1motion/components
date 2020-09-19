@@ -14,7 +14,7 @@ export const TitleContainer = css`
   font-weight: 600;
   line-height: 1.4;
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--text-color);
   h1& {
     font-size: ${fontSizes.h1};
   }

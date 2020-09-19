@@ -20,7 +20,6 @@ function collapseElement(ref: HTMLElement) {
 }
 
 function expandElement(ref: HTMLElement) {
-  console.log("expand");
   // get the height of the element's inner content, regardless of its actual size
   const sectionHeight = ref.scrollHeight;
 

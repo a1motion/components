@@ -7,15 +7,13 @@ import React, {
   useRef,
 } from "react";
 import { css, cx } from "linaria";
-import { darken, rgba, lighten } from "polished";
-import { colors, baseBorderRadius, createTransitions } from "../utils";
+import { createTransitions } from "../utils";
 import Loader from "../Loader/Loader";
 import "../global.css";
 
-export const StundButton = css`
-  color: ${colors["color-basic-800"]};
-  outline: 0;
-  background: ${colors["color-basic-200"]};
+export const ButtonBase = css`
+  color: var(--text-color);
+  background: var(--color-basic-1);
   font-size: 16px;
   line-height: 1.25;
   padding: 8px 16px;
@@ -25,140 +23,158 @@ export const StundButton = css`
   user-select: none;
   text-align: center;
   letter-spacing: 0.5px;
-  border: none;
-  border-radius: ${baseBorderRadius};
+  border-radius: 6px;
   transition: ${createTransitions("background-color", "box-shadow", "opacity")};
-  border: 1px solid ${colors["color-basic-500"]};
+  border: 1px solid var(--basic-border-color);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   position: relative;
+  .menu-item > & {
+    position: static;
+  }
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
   }
   &:not([disabled]):hover {
-    box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.1);
-    background: ${lighten(0.025)(colors["color-basic-200"])};
+    background: var(--color-basic-2);
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background: ${darken(0.025)(colors["color-basic-200"])};
+    background: var(--color-basic-3);
   }
   a& {
     text-decoration: none;
   }
 `;
 
-const StundButtonLink = css`
+const ButtonLink = css`
   border: none;
   padding: 0 !important;
   background: none !important;
   box-shadow: none !important;
-  color: ${colors["color-basic-700"]};
+  color: var(--text-color);
   a&:hover {
     text-decoration: underline;
   }
-  &:hover,
-  &:active {
-    color: ${darken(0.05, colors["color-primary"])};
+  .menu-item & {
+    text-align: left;
+  }
+  .menu-item &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: transparent;
+    content: "";
+  }
+  li:not(.menu-item-active) > &:hover,
+  li:not(.menu-item-active) > &:active {
+    color: var(--color-primary-6);
+  }
+  .menu-item:not(.menu-item-active):hover > & {
+    color: var(--color-primary-6) !important;
+  }
+  .menu-item-active > & {
+    color: var(--color-1) !important;
   }
 `;
 
-const StundButtonOutline = css`
+const ButtonOutline = css`
   background: none;
   box-shadow: none !important;
+  border-width: 2px;
   &:not([disabled]):hover {
-    background: ${darken(0.02)(colors["color-basic-200"])};
+    background: var(--color-basic-1);
   }
   &:not([disabled]):active {
-    border-color: ${colors["color-basic-600"]};
-    background: ${darken(0.05)(colors["color-basic-200"])};
+    border-color: var(--basic-border-color);
   }
 `;
 
-const StundButtonPrimary = css`
-  border-color: ${darken(0.1)(colors["color-primary"])};
-  box-shadow: 0 2px 0 ${rgba(colors["color-primary"], 0.1)};
-  &:not(.${StundButtonOutline}) {
-    color: ${colors["color-basic-100"]};
-    background: ${colors["color-primary"]};
+const ButtonPrimary = css`
+  border-color: var(--color-primary-7);
+  box-shadow: 0 2px 0 var(--color-primary-6-1);
+  &:not(.${ButtonOutline}) {
+    color: var(--text-color-dark);
+    background: var(--color-primary-6);
   }
-  &:not([disabled]):hover {
-    box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.25)};
-    background: ${lighten(0.1)(colors["color-primary"])};
-    border-color: ${colors["color-primary"]};
+  &:not([disabled]):not(.${ButtonOutline}):hover {
+    background: var(--color-primary-7);
+    border-color: var(--color-primary-6);
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px ${rgba(colors["color-primary"], 0.4)};
-    background: ${darken(0.1)(colors["color-primary"])};
+    background: var(--color-primary-6);
   }
-  &.${StundButtonOutline} {
-    color: ${darken(0.2, colors["color-primary"])};
+  &.${ButtonOutline} {
+    color: var(--color-primary-6);
+    border-color: var(--color-primary-6);
     &:not([disabled]):hover {
-      background: ${lighten(0.4)(colors["color-primary"])};
+      color: var(--color-primary-5);
+      background: var(--color-primary-6-1);
     }
     &:not([disabled]):active {
-      border-color: ${darken(0.1)(colors["color-primary"])};
-      background: ${lighten(0.3)(colors["color-primary"])};
+      color: var(--color-primary-5);
+      background: var(--color-primary-6-1);
     }
   }
 `;
 
-const StundButtonDanager = css`
-  border-color: ${darken(0.1)(colors["color-danger"])};
-  box-shadow: 0 2px 0 ${rgba(colors["color-danger"], 0.1)};
-  &:not(.${StundButtonOutline}) {
-    color: ${colors["color-basic-100"]};
-    background: ${colors["color-danger"]};
+const ButtonDanager = css`
+  border-color: var(--color-danger-7);
+  box-shadow: 0 2px 0 var(--color-danger-6-1);
+  &:not(.${ButtonOutline}) {
+    color: var(--text-color-dark);
+    background: var(--color-danger-6);
   }
-  &:not([disabled]):hover {
-    border-color: ${colors["color-danger"]};
-    box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.25)};
-    background: ${lighten(0.1)(colors["color-danger"])};
+  &:not([disabled]):not(.${ButtonOutline}):hover {
+    background: var(--color-danger-7);
+    border-color: var(--color-danger-6);
   }
   &:not([disabled]):active {
-    box-shadow: 0 2px 4px ${rgba(colors["color-danger"], 0.4)};
-    background: ${darken(0.1)(colors["color-danger"])};
+    background: var(--color-danger-6);
   }
-  &.${StundButtonOutline} {
-    color: ${darken(0.1, colors["color-danger"])};
+  &.${ButtonOutline} {
+    color: var(--color-danger-6);
+    border-color: var(--color-danger-6);
     &:not([disabled]):hover {
-      background: ${lighten(0.4)(colors["color-danger"])};
+      color: var(--color-danger-5);
+      background: var(--color-danger-6-1);
     }
     &:not([disabled]):active {
-      border-color: ${darken(0.1)(colors["color-danger"])};
-      background: ${lighten(0.35)(colors["color-danger"])};
+      color: var(--color-danger-5);
+      background: var(--color-danger-6-1);
     }
   }
 `;
 
-const StundButtonControl = css`
-  color: ${colors["color-basic-100"]};
+const ButtonControl = css`
+  color: var(--color-basic-1);
 `;
 
-const StundButtonSmall = css`
+const ButtonSmall = css`
   font-size: 12px;
-  padding: 4px 10px;
+  padding: 6px 12px;
 `;
 
-const StundButtonLarge = css`
+const ButtonLarge = css`
   font-size: 18px;
-  padding: 12px 20px;
+  padding: 12px 24px;
 `;
 
-const StundButtonLabel = css`
+const ButtonLabel = css`
   display: inline-block;
   transition: all 0.25s;
   font-weight: 600;
-  .${StundButtonLink} & {
+  .${ButtonLink} & {
     font-weight: 800;
   }
 `;
 
-const StundButtonLoading = css`
+const ButtonLoading = css`
   opacity: 0;
 `;
 
-const StundButtonLoader = css`
+const ButtonLoader = css`
   position: absolute;
   top: 0;
   left: 0;
@@ -169,7 +185,7 @@ const StundButtonLoader = css`
   justify-content: center;
 `;
 
-const StundButtonBlock = css`
+const ButtonBlock = css`
   display: block;
 `;
 
@@ -238,8 +254,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     const renderChildren = useCallback(() => {
       if (typeof children === "string" || label) {
         return (
-          <span
-            className={cx(StundButtonLabel, _loading && StundButtonLoading)}>
+          <span className={cx(ButtonLabel, _loading && ButtonLoading)}>
             {children || label}
           </span>
         );
@@ -249,15 +264,15 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     }, [children, label, _loading]);
     const classes = useMemo(() => {
       return cx(
-        StundButton,
-        status === "primary" && StundButtonPrimary,
-        status === "danger" && StundButtonDanager,
-        status === "control" && StundButtonControl,
-        type === "link" && StundButtonLink,
-        type === "outline" && StundButtonOutline,
-        size === "small" && StundButtonSmall,
-        size === "large" && StundButtonLarge,
-        block && StundButtonBlock,
+        ButtonBase,
+        status === "primary" && ButtonPrimary,
+        status === "danger" && ButtonDanager,
+        status === "control" && ButtonControl,
+        type === "link" && ButtonLink,
+        type === "outline" && ButtonOutline,
+        size === "small" && ButtonSmall,
+        size === "large" && ButtonLarge,
+        block && ButtonBlock,
         className
       );
     }, [status, size, className]);
@@ -265,13 +280,13 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     const kids = (
       <>
         {_loading && (
-          <span className={StundButtonLoader}>
+          <span className={ButtonLoader}>
             <Loader
               size={16}
               color={
                 ["primary", "danger"].includes(status!)
-                  ? colors["color-basic-200"]
-                  : colors["color-primary-500"]
+                  ? "var(--color-2)"
+                  : "var(--color-primary-6)"
               }
             />
           </span>

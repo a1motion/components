@@ -9,9 +9,13 @@ import type { FormProps, FormItemProps } from "./Form/Form";
 import type { InputProps } from "./Input/Input";
 import type { LoaderProps } from "./Loader/Loader";
 import type { MenuProps, MenuItemProps } from "./Menu/Menu";
-import type {} from "./SettingsMenu/SettingsMenu";
+import type {
+  SettingsMenuProps,
+  SettingsMenuItemProps,
+} from "./SettingsMenu/SettingsMenu";
 import type { StepperProps, StepperItemProps } from "./Stepper/Stepper";
 import type { SwitchProps } from "./Switch/Switch";
+import type { TabsProps } from "./Tabs/Tabs";
 import type { TitleProps } from "./Title/Title";
 
 export { default as AccessibleText } from "./AccessibleText/AccessibleText";
@@ -24,11 +28,13 @@ export { default as CleanAnchor } from "./CleanAnchor/CleanAnchor";
 export { default as Container } from "./Container/Container";
 export { default as Form, FormItem } from "./Form/Form";
 export { default as Input } from "./Input/Input";
+export { default as Layout } from "./Layout/Layout";
 export { default as Loader } from "./Loader/Loader";
 export { default as Menu } from "./Menu/Menu";
 export { default as SettingsMenu } from "./SettingsMenu/SettingsMenu";
 export { default as Stepper, StepperItem } from "./Stepper/Stepper";
 export { default as Switch } from "./Switch/Switch";
+export { default as Tabs } from "./Tabs/Tabs";
 export { default as Title } from "./Title/Title";
 export * from "./utils";
 export type {
@@ -44,8 +50,11 @@ export type {
   LoaderProps,
   MenuProps,
   MenuItemProps,
+  SettingsMenuProps,
+  SettingsMenuItemProps,
   StepperProps,
   StepperItemProps,
   SwitchProps,
+  TabsProps,
   TitleProps,
 };

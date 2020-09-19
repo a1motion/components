@@ -1,29 +1,39 @@
+/* eslint-disable react/no-danger */
 /* eslint-disable react/display-name */
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { MDXProvider } from "@mdx-js/react";
-import { Title, Button, Menu } from "@a1motion/components";
+import {
+  Title,
+  Button,
+  Menu,
+  Layout,
+  useIsomorphicEffect,
+  useTheme,
+} from "@a1motion/components";
 import "typeface-inter";
 import "typeface-fira-code";
 import { css, cx } from "linaria";
+import { styled } from "linaria/react";
+import "../../lib/theme.css";
 import { Playground } from "../components/Playground";
 import CodeBlock from "../components/CodeBlock";
 
 export const globalStyles = css`
   :global() {
     html {
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     @supports (font-variation-settings: normal) {
       html {
-        font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
           "Helvetica Neue", sans-serif !important;
       }
     }
@@ -71,12 +81,32 @@ const Table = (props) => {
   return <table {...props} className={cx(TableStyles)} />;
 };
 
+export function mixinDarkTheme(
+  code: string,
+  themeSelector: string = "core-components-theme"
+): string {
+  return `html[${themeSelector}="dark"] & {
+    ${code}
+  }
+  @media (prefers-color-scheme: dark) {
+    html:not([${themeSelector}="light"]) & {
+      ${code}
+    }
+  }`;
+}
+
 const TableRowStyles = css`
   background-color: #fff;
-  border-top: 1px solid #c6cbd1;
+  border-top: 1px solid var(--basic-border-color);
   &:nth-child(2n) {
     background-color: #fafcfe;
   }
+  ${mixinDarkTheme(`
+    background-color: #151515;
+    &:nth-child(2n) {
+      background-color: #252525;
+    }
+  `)}
 `;
 
 const TableRow = (props) => {
@@ -85,7 +115,7 @@ const TableRow = (props) => {
 
 const TableCellStyles = css`
   padding: 6px 13px;
-  border: 1px solid #dfe2e5;
+  border: 1px solid var(--basic-border-color);
   th& {
     font-weight: 600;
   }
@@ -101,10 +131,79 @@ const InlineCodeStyles = css`
   font-size: 85%;
   background-color: rgba(35, 35, 35, 0.1);
   border-radius: 3px;
+  ${mixinDarkTheme(`
+    background-color: rgba(250, 250, 250, 0.15);
+  `)}
 `;
 
 const InlineCode = (props) => {
   return <code {...props} className={InlineCodeStyles} />;
+};
+
+function range<T>(count: number, generator: (number) => T): T[] {
+  return Array.from({ length: count }).map((_, i) => generator(i + 1));
+}
+
+function getTextColor({
+  count,
+  i,
+  invertText,
+}: {
+  count: number;
+  i: number;
+  invertText: boolean;
+}) {
+  let color = i > Math.floor((count - 1) / 2) ? "white" : "black";
+  if (invertText) {
+    color =
+      color === "white" ? "var(--text-color-invert)" : "var(--text-color)";
+  }
+
+  return color;
+}
+
+const Color = styled.div<{ i: number; count: number; invertText: boolean }>`
+  color: ${(props) => getTextColor(props)};
+  display: flex;
+  flex: 1;
+  min-height: 64px;
+  align-items: center;
+  padding: 0 24px;
+  font-size: 1.75rem;
+  &:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  &:last-child {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+`;
+
+const Colors = ({ count, type, invertText }) => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex: 1;
+        margin: 16px 0;
+      `}>
+      {range(count, (i) => {
+        return (
+          <Color
+            key={i}
+            invertText={invertText}
+            style={{ backgroundColor: `var(--color-${type}-${i}` }}
+            i={i}
+            count={count}>
+            <span>{`color-${type}-${i}`}</span>
+          </Color>
+        );
+      })}
+    </div>
+  );
 };
 
 const mdComponents = {
@@ -124,6 +223,33 @@ const mdComponents = {
     return children;
   },
   Playground,
+  Colors,
+  Row({ children }) {
+    return (
+      <div
+        className={css`
+          display: flex;
+          flex-direction: row;
+          & + & {
+            margin-top: 24px;
+          }
+        `}>
+        {children}
+      </div>
+    );
+  },
+  Col({ children, flex }) {
+    return (
+      <div
+        style={{ flex }}
+        className={css`
+          display: flex;
+          flex-direction: column;
+        `}>
+        {children}
+      </div>
+    );
+  },
 };
 
 const LayoutWrapper = css`
@@ -136,13 +262,14 @@ const LayoutWrapper = css`
 const SidebarStyles = css`
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
-  border-right: 1px solid #eee;
+  padding: 5px 0;
+  border-right: 1px solid var(--basic-border-color);
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: 250px;
+  margin-top: 64px;
 `;
 
 const ContentStyles = css`
@@ -199,6 +326,10 @@ const components = [
     path: "/components/switch",
   },
   {
+    name: "Tabs",
+    path: "/components/tabs",
+  },
+  {
     name: "Title",
     path: "/components/title",
   },
@@ -215,6 +346,11 @@ const Sidebar = () => {
               <Button type={"link"}>Home</Button>
             </Link>
           </Menu.Item>
+          <Menu.Item id={"/colors"}>
+            <Link href={"/colors"} passHref>
+              <Button type={"link"}>Colors</Button>
+            </Link>
+          </Menu.Item>
           <Menu.SubMenu
             collapsible
             id={"/components"}
@@ -227,9 +363,7 @@ const Sidebar = () => {
               return (
                 <Menu.Item key={component.path} id={component.path}>
                   <Link href={component.path} passHref>
-                    <a>
-                      <Button type={"link"}>{component.name}</Button>
-                    </a>
+                    <Button type={"link"}>{component.name}</Button>
                   </Link>
                 </Menu.Item>
               );
@@ -238,6 +372,56 @@ const Sidebar = () => {
         </Menu>
       </nav>
     </div>
+  );
+};
+
+const Header = () => {
+  const theme = useTheme();
+  const changeTheme = useCallback(() => {
+    document.documentElement.setAttribute(
+      "core-components-theme",
+      theme === "dark" ? "light" : "dark"
+    );
+    localStorage.setItem("userTheme", theme === "dark" ? "light" : "dark");
+  }, [theme]);
+  const [showThemeButton, setShowThemeButton] = useState(false);
+  useIsomorphicEffect(() => {
+    if (process.browser) {
+      setTimeout(() => {
+        setShowThemeButton(true);
+      }, 0);
+    }
+  }, []);
+  return (
+    <header
+      className={css`
+        height: 64px;
+        width: 100%;
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--basic-border-color);
+        background-color: var(--layout-background-color);
+        z-index: 1000;
+      `}>
+      <div
+        className={css`
+          flex: 1;
+        `}
+      />
+      <div
+        className={css`
+          flex: 0 auto;
+        `}>
+        {showThemeButton && (
+          <Button onClick={changeTheme}>
+            {theme === "dark" ? "Dark" : "Light"}
+          </Button>
+        )}
+      </div>
+    </header>
   );
 };
 
@@ -250,21 +434,38 @@ function generateTitle(pathname: string) {
   return "@a1motion/components";
 }
 
-export default ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   const router = useRouter();
   return (
     <>
       <Head>
         <title>{generateTitle(router.pathname)}</title>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var a = localStorage.userTheme; if (a) window.document.documentElement.setAttribute('core-components-theme', a);",
+          }}
+        />
       </Head>
       <MDXProvider components={mdComponents}>
-        <div className={LayoutWrapper}>
-          <Sidebar />
-          <div className={ContentStyles}>
-            <Component {...pageProps} />
+        <Layout className={LayoutWrapper}>
+          <Header />
+          <div
+            className={css`
+              display: flex;
+              flex-direction: column;
+              flex: 1;
+              margin-top: 64px;
+            `}>
+            <Sidebar />
+            <div className={ContentStyles}>
+              <Component {...pageProps} />
+            </div>
           </div>
-        </div>
+        </Layout>
       </MDXProvider>
     </>
   );
 };
+
+export default App;

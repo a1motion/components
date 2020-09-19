@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { css, cx } from "linaria";
-import { colors, createTransitions } from "../utils";
+import { createTransitions } from "../utils";
 import AccessibleText from "../AccessibleText/AccessibleText";
 import Loader from "../Loader/Loader";
 import "../global.css";
@@ -24,19 +24,19 @@ const SwitchLabel = css`
   width: 3.5em;
   height: 2em;
   display: inline-block;
-  background-color: ${colors["color-basic-400"]};
+  background-color: var(--color-toggle-background);
   border-radius: 1em/50%;
   position: relative;
   transition: ${createTransitions("background-color")};
   &.checked {
-    background-color: ${colors["color-primary"]};
+    background-color: var(--color-primary-6);
   }
   &.checked:after {
     content: "";
     left: calc(100% - 1.8em);
   }
   &:after {
-    background-color: ${colors["color-basic-100"]};
+    background-color: var(--color-1);
     border-radius: 50%;
     content: "";
     display: block;
@@ -51,11 +51,10 @@ const SwitchLabel = css`
 
 const SwitchLoader = css`
   position: absolute !important;
-  top: 0.4em;
-  left: calc(100% - 1.6em);
-  bottom: 0.4em;
+  top: 0.5em;
+  left: calc(100% - 1.5em);
   .${SwitchLabel}.checked & {
-    left: 0.4em;
+    left: 0.5em;
   }
   transition: ${createTransitions("left")};
 `;
@@ -82,9 +81,9 @@ const Switch: React.FC<SwitchProps> = ({
       <label className={cx(SwitchLabel, trueValue && "checked")}>
         {loading && (
           <Loader
-            size={"1.2em"}
+            size={"1em"}
             className={SwitchLoader}
-            color={trueValue ? colors["color-basic-100"] : undefined}
+            color={"var(--color-1)"}
           />
         )}
         <input

@@ -1,6 +1,5 @@
 import React from "react";
-import { css } from "linaria";
-import { colors } from "../utils";
+import { css, cx } from "linaria";
 import "../global.css";
 
 const LoaderBase = css`
@@ -20,7 +19,7 @@ const Circle = css`
   width: 100%;
   height: 100%;
   border-radius: 100%;
-  border: calc(60px / 10) solid transparent;
+  border: calc(60px / 5) solid transparent;
   border-top-color: #8884ff;
   animation: half-circle-spinner-animation 1000ms infinite;
   &:not(:first-child) {
@@ -45,20 +44,20 @@ export interface LoaderProps {
 
 function getSizeStyle(size: number | string): number | string {
   if (typeof size === "number") {
-    return size / 10;
+    return size / 5;
   }
 
-  return `calc(${size} / 10)`;
+  return `calc(${size} / 5)`;
 }
 
 const Loader: React.FC<LoaderProps> = ({
   size = 60,
-  color = colors["color-primary"],
+  color = "var(--color-primary-6)",
   animationDuration = 1000,
   className,
 }) => (
   <div
-    className={`${LoaderBase}${className ? ` ${className}` : ""}`}
+    className={cx(LoaderBase, className)}
     style={{ width: size, height: size }}>
     <div
       className={Circle}

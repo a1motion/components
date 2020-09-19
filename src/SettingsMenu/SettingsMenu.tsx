@@ -5,9 +5,9 @@ import ChevronRight from "react-feather/dist/icons/chevron-right";
 import Card from "../Card/Card";
 import Title from "../Title/Title";
 import "../global.css";
-import { colors, createTransitions } from "../utils";
+import { createTransitions } from "../utils";
 
-export type SettingsMenuProps = React.ComponentProps<typeof Card> & {};
+export type SettingsMenuProps = React.ComponentProps<typeof Card>;
 export type SettingsMenuType = React.FC<SettingsMenuProps> & {
   Item: typeof SettingsMenuItem;
 };
@@ -61,10 +61,10 @@ const SettingsItemsClickable = css`
   cursor: pointer;
   transition: ${createTransitions("background-color")};
   &:hover {
-    background-color: ${colors["color-basic-300"]};
+    background-color: var(--color-basic-3);
   }
   &:active {
-    background-color: ${colors["color-basic-400"]};
+    background-color: var(--color-basic-4);
   }
 `;
 
