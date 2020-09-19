@@ -24,7 +24,7 @@ export const ButtonBase = css`
   text-align: center;
   letter-spacing: 0.5px;
   border-radius: 6px;
-  transition: ${createTransitions("background-color", "box-shadow", "opacity")};
+  transition: ${createTransitions("background", "box-shadow", "opacity")};
   border: 1px solid var(--basic-border-color);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   position: relative;

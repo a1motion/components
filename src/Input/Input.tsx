@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { css, cx } from "linaria";
 import Loader from "../Loader/Loader";
 import "../global.css";
+import { createTransitions } from "../utils";
 
 const StundInputIsActive = css``;
 const StundInputLoading = css``;
@@ -34,7 +35,7 @@ const StundInput = css`
   font: inherit;
   color: var(--text-color);
   background: var(--layout-background-color);
-  transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
+  transition: ${createTransitions("padding-left")};
   appearance: none;
   outline: none;
   display: block;
@@ -61,7 +62,7 @@ const StundInputLabel = css`
   top: 2px;
   left: 8px;
   transform: translateY(50%);
-  transition: all cubic-bezier(0.645, 0.045, 0.355, 1) 0.25s;
+  transition: ${createTransitions("transform", "font-size", "color")};
   padding: 0 4px;
   .${StundInputIsActive} & {
     transform: translateY(0);

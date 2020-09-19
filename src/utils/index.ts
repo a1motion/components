@@ -17,7 +17,7 @@ export const fontSizes = {
 };
 export const createTransitions = (...props: string[]) =>
   props
-    .map((prop) => `${prop} cubic-bezier(0.645, 0.045, 0.355, 1) 0.35s`)
+    .map((prop) => `${prop} cubic-bezier(0.645, 0.045, 0.355, 1) 0.15s`)
     .join(", ");
 export type IntrinsicProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
