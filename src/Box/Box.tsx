@@ -1,5 +1,6 @@
 import React from "react";
 import { css, cx } from "linaria";
+import { styled } from "linaria/react";
 import "../global.css";
 import { PolymorphicComponent } from "../utils";
 
@@ -17,7 +18,11 @@ const BoxDirectionRow = css`
 `;
 
 const BoxDirectionColumn = css`
-  flex-column: column;
+  flex-direction: column;
+`;
+
+const BoxInternal = styled.div`
+  flex: ${(props: any) => props.flex || "auto"};
 `;
 
 const Box: PolymorphicComponent<BoxProps> = ({
@@ -28,7 +33,8 @@ const Box: PolymorphicComponent<BoxProps> = ({
 }) => {
   const Component = as || "div";
   return (
-    <Component
+    <BoxInternal
+      as={Component}
       {...props}
       className={cx(
         BoxContainer,
