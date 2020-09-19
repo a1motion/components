@@ -7,6 +7,7 @@ import { PolymorphicComponent } from "../utils";
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type BoxProps = {
   direction?: "row" | "column";
+  flex: 1 | 0 | "auto" | string;
 };
 
 const BoxContainer = css`
