@@ -3,6 +3,8 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./lib",
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "exclude": ["lib", "src/**/*.test.tsx"],
   "include": ["index.d.ts", "src"]

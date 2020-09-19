@@ -3,7 +3,7 @@ import path from "path";
 
 function clean() {
   try {
-    fs.unlinkSync(path.join(__dirname, "..", "tsconfig.tsbuildinfo"));
+    fs.unlinkSync(path.join(__dirname, "..", "tsconfig.build.tsbuildinfo"));
   } catch (_e) {}
 
   try {
