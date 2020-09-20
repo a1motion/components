@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { css, cx } from "linaria";
 import Loader from "../Loader/Loader";
-import "../global.css";
 import { createTransitions } from "../utils";
 
 const StundInputIsActive = css``;

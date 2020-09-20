@@ -6,7 +6,6 @@ import ChevronRight from "react-feather/dist/icons/chevron-right";
 import { createTransitions } from "../utils";
 import Button from "../Button/Button";
 import Collapsible from "../Collapsible/Collapsible";
-import "../global.css";
 
 type MenuContextType = {
   activeKeys: string[];

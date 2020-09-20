@@ -4,7 +4,6 @@ import { css, cx } from "linaria";
 import ChevronRight from "react-feather/dist/icons/chevron-right";
 import Card from "../Card/Card";
 import Title from "../Title/Title";
-import "../global.css";
 import { createTransitions } from "../utils";
 
 export type SettingsMenuProps = React.ComponentProps<typeof Card>;

@@ -9,7 +9,6 @@ import React, {
 import { css, cx } from "linaria";
 import { createTransitions } from "../utils";
 import Loader from "../Loader/Loader";
-import "../global.css";
 
 export const ButtonBase = css`
   color: var(--text-color);

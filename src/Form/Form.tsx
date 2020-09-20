@@ -1,6 +1,5 @@
 import React, { useCallback, FormEvent } from "react";
 import { css, cx } from "linaria";
-import "../global.css";
 
 export type FormProps = {
   allowSubmit?: boolean;

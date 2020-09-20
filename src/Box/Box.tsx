@@ -1,7 +1,6 @@
 import React from "react";
 import { css, cx } from "linaria";
 import { styled } from "linaria/react";
-import "../global.css";
 import { PolymorphicComponent } from "../utils";
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,4 +1,3 @@
-import "./global.css";
 import type { AccessibleTextProps } from "./AccessibleText/AccessibleText";
 import type { AvatarProps } from "./Avatar/Avatar";
 import type { BoxProps } from "./Box/Box";

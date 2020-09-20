@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { LiteralUnion } from "type-fest";
 import { css, cx } from "linaria";
 import Title, { TitleContainer } from "../Title/Title";
-import "../global.css";
 
 type CardTypes = LiteralUnion<"default" | "primary" | "danger", string>;
 
