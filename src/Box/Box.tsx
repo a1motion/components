@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef, ForwardRefExoticComponent } from "react";
 import { css, cx } from "linaria";
 import { styled } from "linaria/react";
-import { PolymorphicComponent } from "../utils";
+import { PolymorphicComponentProps } from "../utils";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type BoxProps = {
@@ -25,25 +25,29 @@ const BoxInternal = styled.div`
   flex: ${(props: any) => props.flex || "auto"};
 `;
 
-const Box: PolymorphicComponent<BoxProps> = ({
-  as,
-  direction,
-  className,
-  ...props
-}) => {
-  const Component = as || "div";
-  return (
-    <BoxInternal
-      as={Component}
-      {...props}
-      className={cx(
-        BoxContainer,
-        direction === "row" && BoxDirectionRow,
-        direction === "column" && BoxDirectionColumn,
-        className
-      )}
-    />
-  );
-};
+type BoxType<E extends React.ElementType = "div"> = ForwardRefExoticComponent<
+  PolymorphicComponentProps<E, BoxProps>
+>;
+
+const Box: BoxType = forwardRef(
+  ({ as, direction, className, ...props }, ref) => {
+    const Component = as || "div";
+    return (
+      <BoxInternal
+        {...props}
+        ref={ref}
+        as={Component}
+        className={cx(
+          BoxContainer,
+          direction === "row" && BoxDirectionRow,
+          direction === "column" && BoxDirectionColumn,
+          className
+        )}
+      />
+    );
+  }
+);
+
+Box.displayName = "Box";
 
 export default Box;
